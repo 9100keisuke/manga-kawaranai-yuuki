@@ -24,13 +24,35 @@ body{
   margin:0 auto;
 }
 
-/* ── Hero ── */
+/* ═══════════════════════════════
+   PATTERN 1: 集中線ヒーロー
+   ═══════════════════════════════ */
 .hero{
   position:relative;
   padding:56px 24px 48px;
   text-align:center;
-  background:linear-gradient(180deg,#F8FFFE 0%,#fff 100%);
+  background:#fff;
+  overflow:hidden;
 }
+.hero::before{
+  content:'';
+  position:absolute;
+  top:50%;left:50%;
+  width:200vmax;height:200vmax;
+  transform:translate(-50%,-50%);
+  background:repeating-conic-gradient(
+    rgba(61,191,184,0.06) 0deg 2deg,
+    transparent 2deg 8deg
+  );
+  animation:focus-spin 60s linear infinite;
+  pointer-events:none;
+  z-index:0;
+}
+@keyframes focus-spin{
+  to{transform:translate(-50%,-50%) rotate(360deg)}
+}
+.hero>*{position:relative;z-index:1;}
+
 .hero-eyecatch{
   display:inline-block;
   font-size:11px;
@@ -42,14 +64,27 @@ body{
   letter-spacing:0.08em;
   margin-bottom:20px;
 }
+
+/* ═══════════════════════════════
+   PATTERN 2: 漫画タイトルアウトライン
+   ═══════════════════════════════ */
 .hero h1{
-  font-size:clamp(32px,8vw,52px);
+  font-size:clamp(36px,9vw,56px);
   font-weight:900;
   line-height:1.25;
   letter-spacing:-0.02em;
   margin-bottom:16px;
+  color:#1A1A2E;
+  text-shadow:
+    3px 3px 0 rgba(61,191,184,0.15),
+    -1px -1px 0 rgba(255,255,255,0.8);
 }
-.hero h1 .accent{color:#3DBFB8;}
+.hero h1 .accent{
+  color:#3DBFB8;
+  text-shadow:
+    2px 2px 0 rgba(61,191,184,0.2),
+    -1px -1px 0 #fff;
+}
 .hero-lead{
   font-size:clamp(14px,3.5vw,17px);
   color:#6B7280;
@@ -82,12 +117,18 @@ body{
 .manga{
   background:#fff;
 }
+
+/* ═══════════════════════════════
+   PATTERN 3: 漫画コマ枠（太枠ボーダー）
+   ═══════════════════════════════ */
 .panel{
   position:relative;
   overflow:hidden;
   opacity:0;
   transform:translateY(24px);
   transition:opacity 0.6s ease,transform 0.6s ease;
+  border:3px solid #1A1A2E;
+  margin-bottom:-3px;
 }
 .panel.visible{opacity:1;transform:translateY(0);}
 .panel img{
@@ -95,17 +136,34 @@ body{
   display:block;
 }
 
-/* ── Speech Bubbles (Pro) ── */
+/* ═══════════════════════════════
+   PATTERN 4: スクリーントーン風オーバーレイ
+   ═══════════════════════════════ */
+.panel.tone::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle,#000 0.5px,transparent 0.5px);
+  background-size:4px 4px;
+  opacity:0.04;
+  pointer-events:none;
+  z-index:1;
+}
+
+/* ═══════════════════════════════
+   PATTERN 5: 吹き出し（ベース + バリエーション）
+   ═══════════════════════════════ */
 .bubble{
   position:absolute;
   background:#fff;
+  border:2.5px solid #1A1A2E;
   border-radius:20px;
   padding:14px 20px;
   font-size:clamp(13px,3.2vw,17px);
   font-weight:700;
   line-height:1.65;
-  box-shadow:0 4px 20px rgba(0,0,0,0.12),0 1px 4px rgba(0,0,0,0.08);
-  z-index:2;
+  box-shadow:4px 4px 0 rgba(26,26,46,0.08);
+  z-index:3;
   max-width:60%;
 }
 .bubble::after{
@@ -113,34 +171,118 @@ body{
   position:absolute;
   width:0;height:0;
 }
-/* tail variants */
 .bubble.tb::after{
-  bottom:-12px;left:28px;
+  bottom:-13px;left:28px;
   border-left:10px solid transparent;
   border-right:10px solid transparent;
-  border-top:13px solid #fff;
-  filter:drop-shadow(0 2px 2px rgba(0,0,0,0.06));
+  border-top:14px solid #1A1A2E;
+}
+.bubble.tb::before{
+  content:'';position:absolute;
+  bottom:-10px;left:29px;
+  border-left:9px solid transparent;
+  border-right:9px solid transparent;
+  border-top:12px solid #fff;
+  z-index:1;
 }
 .bubble.tl::after{
-  left:-11px;top:22px;
+  left:-12px;top:22px;
   border-top:9px solid transparent;
   border-bottom:9px solid transparent;
-  border-right:12px solid #fff;
-  filter:drop-shadow(-2px 0 2px rgba(0,0,0,0.06));
+  border-right:13px solid #1A1A2E;
+}
+.bubble.tl::before{
+  content:'';position:absolute;
+  left:-9px;top:23px;
+  border-top:8px solid transparent;
+  border-bottom:8px solid transparent;
+  border-right:11px solid #fff;
+  z-index:1;
 }
 .bubble.tr::after{
-  right:-11px;top:22px;
+  right:-12px;top:22px;
   border-top:9px solid transparent;
   border-bottom:9px solid transparent;
-  border-left:12px solid #fff;
-  filter:drop-shadow(2px 0 2px rgba(0,0,0,0.06));
+  border-left:13px solid #1A1A2E;
+}
+.bubble.tr::before{
+  content:'';position:absolute;
+  right:-9px;top:23px;
+  border-top:8px solid transparent;
+  border-bottom:8px solid transparent;
+  border-left:11px solid #fff;
+  z-index:1;
 }
 .bubble .em{
   color:#E04848;
   font-weight:900;
 }
 
-/* ── Narration ── */
+/* ═══════════════════════════════
+   PATTERN 6: ギザギザ吹き出し（叫び）
+   ═══════════════════════════════ */
+.bubble-shout{
+  position:absolute;
+  z-index:3;
+  max-width:55%;
+  text-align:center;
+  font-size:clamp(14px,3.5vw,18px);
+  font-weight:900;
+  line-height:1.5;
+  padding:24px 28px;
+  background:#fff;
+  border:3px solid #1A1A2E;
+  clip-path:polygon(
+    50% 0%, 61% 8%, 72% 2%, 78% 12%, 90% 8%, 92% 20%,
+    100% 28%, 95% 38%, 100% 48%, 96% 58%, 100% 68%,
+    94% 76%, 98% 86%, 88% 90%, 82% 100%, 72% 94%,
+    60% 100%, 50% 94%, 40% 100%, 28% 94%, 18% 100%,
+    12% 90%, 2% 86%, 6% 76%, 0% 68%, 4% 58%,
+    0% 48%, 5% 38%, 0% 28%, 8% 20%, 10% 8%,
+    22% 12%, 28% 2%, 39% 8%
+  );
+  filter:drop-shadow(3px 3px 0 rgba(26,26,46,0.1));
+}
+.bubble-shout .em{color:#E04848;}
+
+/* ═══════════════════════════════
+   PATTERN 7: もくもく吹き出し（思考）
+   ═══════════════════════════════ */
+.bubble-think{
+  position:absolute;
+  z-index:3;
+  max-width:55%;
+  text-align:center;
+  font-size:clamp(13px,3.2vw,16px);
+  font-weight:500;
+  line-height:1.7;
+  color:#6B7280;
+  padding:18px 24px;
+  background:#fff;
+  border:2px solid #D4DAE0;
+  border-radius:40% 60% 50% 40% / 50% 40% 60% 50%;
+  box-shadow:2px 2px 0 rgba(0,0,0,0.05);
+}
+.bubble-think::after{
+  content:'';position:absolute;
+  bottom:-18px;left:30px;
+  width:12px;height:12px;
+  background:#fff;
+  border:2px solid #D4DAE0;
+  border-radius:50%;
+}
+.bubble-think::before{
+  content:'';position:absolute;
+  bottom:-28px;left:24px;
+  width:7px;height:7px;
+  background:#fff;
+  border:2px solid #D4DAE0;
+  border-radius:50%;
+}
+
+/* ═══════════════════════════════
+   PATTERN 8: ナレーション + 感情カラー
+   ═══════════════════════════════ */
 .narr{
   padding:36px 28px;
   text-align:center;
@@ -173,6 +315,151 @@ body{
   font-size:clamp(16px,4vw,20px);
 }
 
+/* ═══════════════════════════════
+   PATTERN 9: 漫画的演出テキスト（大文字強調）
+   ═══════════════════════════════ */
+.narr-dramatic{
+  background:#1A1A2E;
+  color:#fff;
+  position:relative;
+  overflow:hidden;
+  padding:48px 28px;
+}
+.narr-dramatic::before{
+  content:'';
+  position:absolute;
+  top:50%;left:50%;
+  width:150vmax;height:150vmax;
+  transform:translate(-50%,-50%);
+  background:repeating-conic-gradient(
+    rgba(255,255,255,0.03) 0deg 3deg,
+    transparent 3deg 9deg
+  );
+  pointer-events:none;
+}
+.narr-dramatic .big{
+  display:block;
+  font-size:clamp(28px,7vw,42px);
+  font-weight:900;
+  letter-spacing:0.1em;
+  margin:8px 0;
+  position:relative;
+}
+
+/* ═══════════════════════════════
+   PATTERN 10: オノマトペ
+   ═══════════════════════════════ */
+.sfx{
+  position:absolute;
+  font-weight:900;
+  z-index:4;
+  pointer-events:none;
+  letter-spacing:0.15em;
+  opacity:0.85;
+}
+.sfx-shake{
+  animation:sfx-shake 0.4s ease-in-out infinite alternate;
+}
+@keyframes sfx-shake{
+  0%{transform:translate(0,0) rotate(-2deg)}
+  100%{transform:translate(1px,-1px) rotate(2deg)}
+}
+.sfx-pulse{
+  animation:sfx-pulse 1.5s ease-in-out infinite;
+}
+@keyframes sfx-pulse{
+  0%,100%{opacity:0.7;transform:scale(1)}
+  50%{opacity:1;transform:scale(1.08)}
+}
+
+/* ═══════════════════════════════
+   PATTERN 11: スピードライン背景
+   ═══════════════════════════════ */
+.speed-bg{
+  position:relative;
+  overflow:hidden;
+}
+.speed-bg::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:repeating-linear-gradient(
+    90deg,
+    transparent 0px,
+    transparent 3px,
+    rgba(26,26,46,0.03) 3px,
+    rgba(26,26,46,0.03) 4px
+  );
+  pointer-events:none;
+  z-index:1;
+}
+
+/* ═══════════════════════════════
+   PATTERN 12: 斜めセクション分割
+   ═══════════════════════════════ */
+.section-slash{
+  position:relative;
+  z-index:1;
+}
+.section-slash::before{
+  content:'';
+  position:absolute;
+  top:-30px;left:0;right:0;
+  height:60px;
+  background:#fff;
+  clip-path:polygon(0 100%,100% 0,100% 100%);
+  z-index:2;
+}
+.section-slash-rev::before{
+  clip-path:polygon(0 0,100% 100%,0 100%);
+}
+
+/* ═══════════════════════════════
+   PATTERN 13: ハーフトーンドット背景
+   ═══════════════════════════════ */
+.halftone-bg{
+  position:relative;
+}
+.halftone-bg::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle,rgba(61,191,184,0.08) 1px,transparent 1px);
+  background-size:8px 8px;
+  pointer-events:none;
+}
+
+/* ═══════════════════════════════
+   PATTERN 14: チャプターマーカー
+   ═══════════════════════════════ */
+.chapter{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  padding:20px 24px;
+  background:#1A1A2E;
+}
+.chapter-num{
+  font-size:11px;
+  font-weight:900;
+  color:#3DBFB8;
+  letter-spacing:0.15em;
+  white-space:nowrap;
+}
+.chapter-line{
+  flex:1;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(61,191,184,0.4),transparent);
+  max-width:60px;
+}
+.chapter-title{
+  font-size:13px;
+  font-weight:700;
+  color:#E8E6E3;
+  letter-spacing:0.06em;
+}
+
 /* ── Dots divider ── */
 .dots{
   text-align:center;
@@ -183,11 +470,52 @@ body{
   background:#fff;
 }
 
+/* ═══════════════════════════════
+   PATTERN 15: 感情インパクト（画面振動）
+   ═══════════════════════════════ */
+.impact{
+  animation:impact 0.5s ease;
+}
+@keyframes impact{
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-3px)}
+  40%{transform:translateX(3px)}
+  60%{transform:translateX(-2px)}
+  80%{transform:translateX(1px)}
+}
+
+/* ═══════════════════════════════
+   PATTERN 16: コマ割りグリッド（2コマ横並び）
+   ═══════════════════════════════ */
+.panel-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0;
+  border:3px solid #1A1A2E;
+  margin-bottom:-3px;
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity 0.6s ease,transform 0.6s ease;
+}
+.panel-grid.visible{opacity:1;transform:translateY(0);}
+.panel-grid .grid-cell{
+  position:relative;
+  overflow:hidden;
+  border-right:2px solid #1A1A2E;
+}
+.panel-grid .grid-cell:last-child{border-right:none;}
+.panel-grid .grid-cell img{
+  width:100%;height:100%;
+  object-fit:cover;
+  display:block;
+}
+
 /* ── Mid CTA ── */
 .mid-cta{
   background:linear-gradient(180deg,#F0FAF8,#E6F5F2);
   padding:40px 28px;
   text-align:center;
+  position:relative;
 }
 .mid-cta p{
   font-size:clamp(13px,3vw,15px);
@@ -206,14 +534,20 @@ body{
   text-decoration:none;
   box-shadow:0 4px 12px rgba(61,191,184,0.3);
   transition:transform 0.2s;
+  position:relative;
+  z-index:1;
 }
 .mid-cta a:hover{transform:scale(1.03);}
 
-/* ── CTA Section ── */
+/* ═══════════════════════════════
+   PATTERN 17: ドラマチックCTAセクション
+   ═══════════════════════════════ */
 .cta{
   background:linear-gradient(180deg,#fff 0%,#F0FAF8 20%,#E0F5F3 100%);
   padding:56px 24px 72px;
   text-align:center;
+  position:relative;
+  overflow:hidden;
 }
 .cta-badge{
   display:inline-block;
@@ -234,6 +568,40 @@ body{
   letter-spacing:-0.01em;
 }
 .cta h2 .accent{color:#3DBFB8;}
+
+/* ═══════════════════════════════
+   PATTERN 18: キラキラエフェクト
+   ═══════════════════════════════ */
+.sparkle-zone{position:relative;}
+.sparkle{
+  position:absolute;
+  width:6px;height:6px;
+  border-radius:50%;
+  pointer-events:none;
+}
+.sparkle::before,.sparkle::after{
+  content:'';position:absolute;
+  background:#3DBFB8;
+}
+.sparkle::before{
+  width:2px;height:100%;
+  left:50%;transform:translateX(-50%);
+  border-radius:1px;
+}
+.sparkle::after{
+  width:100%;height:2px;
+  top:50%;transform:translateY(-50%);
+  border-radius:1px;
+}
+.sparkle-1{top:8%;left:12%;animation:twinkle 2s ease-in-out infinite;}
+.sparkle-2{top:15%;right:10%;animation:twinkle 2s 0.5s ease-in-out infinite;width:4px;height:4px;}
+.sparkle-3{top:60%;left:8%;animation:twinkle 2s 1s ease-in-out infinite;width:5px;height:5px;}
+.sparkle-4{top:55%;right:14%;animation:twinkle 2s 1.5s ease-in-out infinite;}
+.sparkle-5{bottom:20%;left:20%;animation:twinkle 2s 0.8s ease-in-out infinite;width:4px;height:4px;}
+@keyframes twinkle{
+  0%,100%{opacity:0;transform:scale(0.5) rotate(0deg)}
+  50%{opacity:1;transform:scale(1) rotate(45deg)}
+}
 
 /* Book */
 .book-wrap{
@@ -289,7 +657,9 @@ body{
   margin-left:auto;margin-right:auto;
 }
 
-/* Form */
+/* ═══════════════════════════════
+   PATTERN 19: 漫画風フォーム
+   ═══════════════════════════════ */
 .form{
   display:flex;flex-direction:column;
   gap:10px;
@@ -299,20 +669,24 @@ body{
 .form input{
   width:100%;
   padding:15px 20px;
-  border:1.5px solid #D4DAE0;
+  border:2.5px solid #1A1A2E;
   border-radius:10px;
   font-size:15px;
   font-family:'Noto Sans JP',sans-serif;
   background:#fff;
   outline:none;
   transition:border-color 0.25s,box-shadow 0.25s;
+  box-shadow:3px 3px 0 rgba(26,26,46,0.06);
 }
 .form input:focus{
   border-color:#3DBFB8;
-  box-shadow:0 0 0 3px rgba(61,191,184,0.12);
+  box-shadow:3px 3px 0 rgba(61,191,184,0.15);
 }
 .form input::placeholder{color:#B0B8C0;}
 
+/* ═══════════════════════════════
+   PATTERN 20: 漫画風ボタン
+   ═══════════════════════════════ */
 .btn{
   display:block;width:100%;
   padding:17px;
@@ -322,16 +696,21 @@ body{
   font-size:16px;
   font-weight:900;
   font-family:'Zen Maru Gothic',sans-serif;
-  border:none;border-radius:10px;
+  border:3px solid #1A1A2E;
+  border-radius:10px;
   cursor:pointer;
   position:relative;overflow:hidden;
-  box-shadow:0 4px 16px rgba(61,191,184,0.35);
+  box-shadow:4px 4px 0 rgba(26,26,46,0.15);
   transition:transform 0.15s,box-shadow 0.15s;
   letter-spacing:0.03em;
 }
 .btn:hover{
-  transform:translateY(-2px);
-  box-shadow:0 6px 24px rgba(61,191,184,0.45);
+  transform:translate(-2px,-2px);
+  box-shadow:6px 6px 0 rgba(26,26,46,0.18);
+}
+.btn:active{
+  transform:translate(2px,2px);
+  box-shadow:1px 1px 0 rgba(26,26,46,0.15);
 }
 .btn::after{
   content:'';position:absolute;
@@ -369,13 +748,88 @@ body{
   font-size:9px;color:#3DBFB8;font-weight:900;
 }
 
-/* ── Footer ── */
+/* ═══════════════════════════════
+   PATTERN 21: 漫画風フッター
+   ═══════════════════════════════ */
 footer{
   text-align:center;
   padding:28px 24px;
   font-size:11px;
   color:#B0B8C0;
-  background:#F8FAFE;
+  background:#1A1A2E;
+  position:relative;
+}
+footer::before{
+  content:'';
+  position:absolute;
+  top:-20px;left:0;right:0;
+  height:20px;
+  background:linear-gradient(180deg,transparent,#1A1A2E);
+}
+
+/* ═══════════════════════════════
+   PATTERN 22: リーディングライン（読む方向ガイド）
+   ═══════════════════════════════ */
+.reading-guide{
+  text-align:center;
+  padding:16px;
+  background:#fff;
+}
+.reading-guide span{
+  display:inline-block;
+  font-size:10px;
+  font-weight:700;
+  color:#D0CCC6;
+  letter-spacing:0.2em;
+}
+
+/* ═══════════════════════════════
+   PATTERN 23: 感情グラデーション境界
+   ═══════════════════════════════ */
+.emotion-fade{
+  height:40px;
+  background:linear-gradient(180deg,#FFF9F3 0%,#fff 100%);
+}
+.emotion-fade-dark{
+  height:40px;
+  background:linear-gradient(180deg,#1A1A2E 0%,#fff 100%);
+}
+.emotion-fade-teal{
+  height:40px;
+  background:linear-gradient(180deg,#E6F5F2 0%,#fff 100%);
+}
+
+/* ═══════════════════════════════
+   PATTERN 24: コミック効果線（放射状）
+   ═══════════════════════════════ */
+.radial-lines{
+  position:relative;
+  overflow:hidden;
+}
+.radial-lines::after{
+  content:'';
+  position:absolute;
+  top:50%;left:50%;
+  width:200%;height:200%;
+  transform:translate(-50%,-50%);
+  background:repeating-conic-gradient(
+    rgba(26,26,46,0.04) 0deg 1.5deg,
+    transparent 1.5deg 6deg
+  );
+  pointer-events:none;
+  z-index:1;
+}
+
+/* ═══════════════════════════════
+   PATTERN 25: ページめくり感（影付きセパレーター）
+   ═══════════════════════════════ */
+.page-turn{
+  height:8px;
+  background:linear-gradient(180deg,
+    rgba(0,0,0,0.06) 0%,
+    rgba(0,0,0,0.02) 40%,
+    transparent 100%
+  );
 }
 
 /* ── Bubble positions per panel ── */
@@ -384,31 +838,43 @@ footer{
 .b3{top:5%;right:5%;max-width:55%;}
 .b4{top:2%;left:50%;transform:translateX(-50%);text-align:center;
   background:#FFF9F0;
-  box-shadow:0 4px 20px rgba(180,140,60,0.10),0 1px 4px rgba(0,0,0,0.06);
+  border-color:#C8A96E;
 }
-.b4::after{border-top-color:#FFF9F0 !important;}
+.b4::before{border-top-color:#FFF9F0 !important;}
+.b4::after{border-top-color:#C8A96E !important;}
 .b5{bottom:2%;left:50%;transform:translateX(-50%);text-align:center;max-width:65%;}
 .b6{top:5%;left:5%;text-align:left;max-width:60%;}
 .b7{top:2%;left:5%;max-width:50%;}
 
+/* ═══════════════════════════════
+   PATTERN 26: スタガーアニメーション
+   ═══════════════════════════════ */
+.stagger-1{transition-delay:0.1s}
+.stagger-2{transition-delay:0.2s}
+.stagger-3{transition-delay:0.3s}
+
 /* ── Mobile fine-tuning ── */
 @media(max-width:520px){
   .wrapper{max-width:100%;}
-  .bubble{padding:10px 14px;border-radius:16px;}
+  .bubble,.bubble-shout,.bubble-think{padding:10px 14px;}
+  .bubble{border-radius:16px;}
   .book{width:150px;height:210px;}
   .book-face{width:150px;height:210px;padding:16px;}
   .book-spine{height:210px;width:15px;left:-15px;}
   .book-face .bt{font-size:17px;}
+  .panel-grid{grid-template-columns:1fr 1fr;}
+  .sfx{font-size:80% !important;}
 }
 @media(min-width:521px){
-  .panel img{border-radius:4px;}
+  .panel img{border-radius:0;}
   .manga{padding:0 16px;}
+  .panel,.panel-grid{border-radius:2px;}
 }
 </style>
 </head>
 <body>
 
-<!-- ━━━ HERO ━━━ -->
+<!-- ━━━ HERO (集中線 + アウトラインタイトル) ━━━ -->
 <section class="hero">
   <div class="wrapper">
     <span class="hero-eyecatch">漫画で読む</span>
@@ -428,14 +894,23 @@ footer{
 <div class="manga">
 <div class="wrapper">
 
+  <!-- CHAPTER MARKER -->
+  <div class="chapter">
+    <div class="chapter-line"></div>
+    <span class="chapter-num">CHAPTER 01</span>
+    <span class="chapter-title">限界</span>
+    <div class="chapter-line"></div>
+  </div>
+
   <!-- NARRATION: 導入 -->
   <div class="narr narr-dark">
     これは、「変わらなきゃ」と思い続けた<br>
     ひとりの女性の、小さな物語です。
   </div>
+  <div class="emotion-fade-dark"></div>
 
-  <!-- PANEL 1 -->
-  <div class="panel">
+  <!-- PANEL 1 (スクリーントーン付き) -->
+  <div class="panel tone">
     <img src="manga-images/panel-1.webp" alt="" loading="lazy">
     <div class="bubble tr b1">
       また、<span class="em">変わろう</span>として、<br>失敗した...
@@ -448,26 +923,42 @@ footer{
     <div class="bubble tb b2">
       みんなが言う通りに<br>やってるのに...
     </div>
+    <!-- オノマトペ -->
+    <span class="sfx sfx-pulse" style="bottom:8%;right:6%;font-size:clamp(20px,6vw,32px);color:rgba(224,72,72,0.2);writing-mode:vertical-rl;">ザワ...</span>
   </div>
 
-  <!-- PANEL 3 -->
-  <div class="panel">
+  <!-- PANEL 3 (ギザギザ吹き出し) -->
+  <div class="panel radial-lines">
     <img src="manga-images/panel-3.webp" alt="" loading="lazy">
-    <div class="bubble tl b3">
+    <div class="bubble-shout" style="top:5%;right:4%;max-width:55%;">
       何をやっても変われない<br>自分が、<span class="em">嫌い</span>
     </div>
+    <!-- オノマトペ -->
+    <span class="sfx sfx-shake" style="bottom:10%;left:4%;font-size:clamp(24px,7vw,36px);color:rgba(26,26,46,0.08);writing-mode:vertical-rl;">ドドド</span>
   </div>
+
+  <!-- ページめくり感 -->
+  <div class="page-turn"></div>
 
   <!-- DOTS -->
   <div class="dots">・・・</div>
+
+  <!-- CHAPTER 02 -->
+  <div class="chapter">
+    <div class="chapter-line"></div>
+    <span class="chapter-num">CHAPTER 02</span>
+    <span class="chapter-title">転機</span>
+    <div class="chapter-line"></div>
+  </div>
 
   <!-- NARRATION: 転機 -->
   <div class="narr narr-warm">
     ある日、友人と入ったカフェで。<br>
     たった一言が、すべてを変えた。
   </div>
+  <div class="emotion-fade"></div>
 
-  <!-- PANEL 4 -->
+  <!-- PANEL 4 (思考吹き出し付き金色枠) -->
   <div class="panel">
     <img src="manga-images/panel-4.webp" alt="" loading="lazy">
     <div class="bubble tb b4">
@@ -476,16 +967,19 @@ footer{
     </div>
   </div>
 
-  <!-- PANEL 5 -->
+  <!-- PANEL 5 (思考バブル) -->
   <div class="panel">
     <img src="manga-images/panel-5.webp" alt="" loading="lazy">
-    <div class="bubble b5">
-      変わらなくて...<span class="em">いい？</span>
+    <div class="bubble-think" style="bottom:4%;left:50%;transform:translateX(-50%);max-width:65%;">
+      変わらなくて...<span class="em" style="color:#E04848;font-weight:900;">いい？</span>
     </div>
+    <!-- キラキラ -->
+    <span class="sfx" style="top:10%;right:8%;font-size:16px;color:rgba(61,191,184,0.3);">&#10022;</span>
+    <span class="sfx sfx-pulse" style="top:20%;right:15%;font-size:12px;color:rgba(61,191,184,0.2);">&#10022;</span>
   </div>
 
-  <!-- MID CTA -->
-  <div class="mid-cta">
+  <!-- MID CTA (ハーフトーン背景) -->
+  <div class="mid-cta halftone-bg section-slash">
     <p>
       もし今、「変わらなきゃ」に<br>
       疲れているなら。<br>
@@ -494,14 +988,23 @@ footer{
     <a href="#cta-form">書籍を無料で受け取る</a>
   </div>
 
+  <!-- CHAPTER 03 -->
+  <div class="chapter">
+    <div class="chapter-line"></div>
+    <span class="chapter-num">CHAPTER 03</span>
+    <span class="chapter-title">覚醒</span>
+    <div class="chapter-line"></div>
+  </div>
+
   <!-- NARRATION: 気づき -->
   <div class="narr narr-light">
     「変わらなきゃ」と思い込んでいた。<br>
     でも本当に必要だったのは——
   </div>
+  <div class="emotion-fade-teal"></div>
 
   <!-- PANEL 6 -->
-  <div class="panel">
+  <div class="panel tone">
     <img src="manga-images/panel-6.webp" alt="" loading="lazy">
     <div class="bubble tr b6">
       自分のままでいることに、<br>
@@ -510,27 +1013,40 @@ footer{
     </div>
   </div>
 
-  <!-- PANEL 7 -->
-  <div class="panel">
+  <!-- PANEL 7 (スピードライン背景) -->
+  <div class="panel speed-bg">
     <img src="manga-images/panel-7.webp" alt="" loading="lazy">
     <div class="bubble tr b7">
       頑張るのをやめたら、<br>
       なぜか、<span class="em">動き始めた。</span>
     </div>
+    <!-- オノマトペ -->
+    <span class="sfx" style="bottom:6%;right:5%;font-size:clamp(14px,4vw,20px);color:rgba(61,191,184,0.25);letter-spacing:0.3em;">フワッ</span>
   </div>
 
-  <!-- NARRATION: 締め -->
-  <div class="narr narr-end">
+  <!-- ページめくり感 -->
+  <div class="page-turn"></div>
+
+  <!-- NARRATION: ドラマチック締め (集中線 + 大文字) -->
+  <div class="narr narr-dramatic visible">
     変わることが、正解じゃなかった。<br><br>
-    <strong>「変わらない」という勇気が、<br>人生を動かした。</strong>
+    <span class="big" style="color:#3DBFB8;">「変わらない」という勇気が、</span>
+    <span class="big" style="color:#fff;">人生を動かした。</span>
   </div>
 
 </div>
 </div>
 
-<!-- ━━━ CTA ━━━ -->
-<section class="cta" id="cta-form">
-  <div class="wrapper">
+<!-- ━━━ CTA (キラキラ + ハーフトーン) ━━━ -->
+<section class="cta halftone-bg sparkle-zone" id="cta-form">
+  <!-- キラキラエフェクト -->
+  <div class="sparkle sparkle-1"></div>
+  <div class="sparkle sparkle-2"></div>
+  <div class="sparkle sparkle-3"></div>
+  <div class="sparkle sparkle-4"></div>
+  <div class="sparkle sparkle-5"></div>
+
+  <div class="wrapper" style="position:relative;z-index:1;">
     <span class="cta-badge">2026年6月 扶桑社より発売</span>
     <h2>
       この考え方を、<br>
@@ -582,11 +1098,17 @@ footer{
 <script>
 const io = new IntersectionObserver((entries) => {
   entries.forEach(e => {
-    if (e.isIntersecting) e.target.classList.add('visible');
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      if (e.target.dataset.impact) {
+        e.target.classList.add('impact');
+        setTimeout(() => e.target.classList.remove('impact'), 500);
+      }
+    }
   });
 }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
-document.querySelectorAll('.panel, .narr').forEach(el => io.observe(el));
+document.querySelectorAll('.panel, .panel-grid, .narr').forEach(el => io.observe(el));
 </script>
 
 </body>
