@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>変わらない勇気 | 漫画で読む</title>
+<meta name="description" content="変わろうとして疲れたあなたへ。変わらない勇気という新しい選択肢を、漫画で体験してみませんか。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:#111;
+  font-family:'Zen Maru Gothic','Noto Sans JP',sans-serif;
+  color:#1A1A2E;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── Layout ── */
+.wrap{max-width:520px;margin:0 auto;background:#fff;}
+
+/* ═══════════════════════════════════════
+   HERO — 集中線 + 漫画タイトルカード
+   ═══════════════════════════════════════ */
+.hero{
+  position:relative;
+  padding:64px 24px 48px;
+  text-align:center;
+  background:#fff;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;
+  top:50%;left:50%;
+  width:200vmax;height:200vmax;
+  transform:translate(-50%,-50%);
+  background:repeating-conic-gradient(rgba(61,191,184,0.05) 0deg 2deg,transparent 2deg 8deg);
+  animation:focus-spin 80s linear infinite;
+  pointer-events:none;
+}
+@keyframes focus-spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.hero>*{position:relative;z-index:1;}
+.hero-tag{
+  display:inline-block;font-size:11px;font-weight:700;
+  color:#fff;background:#3DBFB8;padding:5px 16px;
+  border-radius:30px;letter-spacing:0.08em;margin-bottom:20px;
+}
+.hero h1{
+  font-size:clamp(38px,10vw,60px);font-weight:900;
+  line-height:1.2;letter-spacing:-0.02em;margin-bottom:16px;
+  text-shadow:3px 3px 0 rgba(61,191,184,0.12);
+}
+.hero h1 .acc{color:#3DBFB8;}
+.hero-lead{
+  font-size:clamp(14px,3.5vw,17px);color:#6B7280;
+  line-height:1.9;font-weight:400;
+}
+.hero-scroll{
+  margin-top:32px;display:flex;flex-direction:column;
+  align-items:center;gap:6px;color:#B0B8C0;
+  font-size:11px;letter-spacing:0.1em;animation:bob 2s ease-in-out infinite;
+}
+.hero-scroll .arr{
+  width:20px;height:20px;
+  border-right:2px solid #B0B8C0;border-bottom:2px solid #B0B8C0;
+  transform:rotate(45deg);
+}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+/* ═══════════════════════════════════════
+   CHAPTER MARKERS
+   ═══════════════════════════════════════ */
+.ch{
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  padding:22px 24px;background:#1A1A2E;
+}
+.ch-n{font-size:10px;font-weight:900;color:#3DBFB8;letter-spacing:0.15em;white-space:nowrap;}
+.ch-l{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(61,191,184,0.4),transparent);max-width:50px;}
+.ch-t{font-size:13px;font-weight:700;color:#E8E6E3;letter-spacing:0.06em;}
+
+/* ═══════════════════════════════════════
+   PANELS — 基本
+   ═══════════════════════════════════════ */
+.p{
+  position:relative;overflow:hidden;
+  border:3px solid #1A1A2E;margin-bottom:-3px;
+  opacity:0;transform:translateY(24px);
+  transition:opacity 0.6s ease,transform 0.6s ease;
+}
+.p.v{opacity:1;transform:translateY(0);}
+.p img{width:100%;display:block;}
+
+/* スクリーントーン */
+.p.tone::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle,#000 0.5px,transparent 0.5px);
+  background-size:4px 4px;opacity:0.03;pointer-events:none;z-index:1;
+}
+
+/* ═══════════════════════════════════════
+   PANEL LAYOUTS — コマ割りバリエーション
+   ═══════════════════════════════════════ */
+
+/* L1: 2列均等グリッド */
+.grid-2{
+  display:grid;grid-template-columns:1fr 1fr;gap:0;
+  border:3px solid #1A1A2E;margin-bottom:-3px;
+  opacity:0;transform:translateY(24px);
+  transition:opacity 0.6s ease,transform 0.6s ease;
+}
+.grid-2.v{opacity:1;transform:translateY(0);}
+.grid-2 .cell{position:relative;overflow:hidden;border-right:2px solid #1A1A2E;}
+.grid-2 .cell:last-child{border-right:none;}
+.grid-2 .cell img{width:100%;height:100%;object-fit:cover;display:block;}
+
+/* L2: 2列不均等（2:1） */
+.grid-21{
+  display:grid;grid-template-columns:2fr 1fr;gap:0;
+  border:3px solid #1A1A2E;margin-bottom:-3px;
+  opacity:0;transform:translateY(24px);
+  transition:opacity 0.6s ease,transform 0.6s ease;
+}
+.grid-21.v{opacity:1;transform:translateY(0);}
+.grid-21 .cell{position:relative;overflow:hidden;border-right:2px solid #1A1A2E;}
+.grid-21 .cell:last-child{border-right:none;}
+.grid-21 .cell img{width:100%;height:100%;object-fit:cover;display:block;}
+
+/* L3: 3列グリッド */
+.grid-3{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;
+  border:3px solid #1A1A2E;margin-bottom:-3px;
+  opacity:0;transform:translateY(24px);
+  transition:opacity 0.6s ease,transform 0.6s ease;
+}
+.grid-3.v{opacity:1;transform:translateY(0);}
+.grid-3 .cell{position:relative;overflow:hidden;border-right:2px solid #1A1A2E;}
+.grid-3 .cell:last-child{border-right:none;}
+.grid-3 .cell img{width:100%;height:100%;object-fit:cover;display:block;}
+
+/* L4: 縦2段 + 横1段 L字レイアウト */
+.grid-L{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:1fr 1fr;
+  gap:0;
+  border:3px solid #1A1A2E;margin-bottom:-3px;
+  opacity:0;transform:translateY(24px);
+  transition:opacity 0.6s ease,transform 0.6s ease;
+}
+.grid-L.v{opacity:1;transform:translateY(0);}
+.grid-L .cell{position:relative;overflow:hidden;}
+.grid-L .cell img{width:100%;height:100%;object-fit:cover;display:block;}
+.grid-L .cell-big{grid-row:1/3;border-right:2px solid #1A1A2E;}
+.grid-L .cell-top{border-bottom:2px solid #1A1A2E;}
+
+/* L5: フルブリード（枠なし） */
+.p-bleed{
+  position:relative;overflow:hidden;
+  margin:0 -3px;
+  opacity:0;transform:translateY(24px);
+  transition:opacity 0.6s ease,transform 0.6s ease;
+}
+.p-bleed.v{opacity:1;transform:translateY(0);}
+.p-bleed img{width:100%;display:block;}
+
+/* L6: 斜めカットパネル */
+.diag-wrap{
+  position:relative;height:280px;
+  border:3px solid #1A1A2E;margin-bottom:-3px;
+  overflow:hidden;
+  opacity:0;transform:translateY(24px);
+  transition:opacity 0.6s ease,transform 0.6s ease;
+}
+.diag-wrap.v{opacity:1;transform:translateY(0);}
+.diag-wrap .diag-left,.diag-wrap .diag-right{
+  position:absolute;top:0;height:100%;overflow:hidden;
+}
+.diag-wrap .diag-left{
+  left:0;width:55%;
+  clip-path:polygon(0 0,100% 0,85% 100%,0 100%);
+}
+.diag-wrap .diag-right{
+  right:0;width:55%;
+  clip-path:polygon(15% 0,100% 0,100% 100%,0 100%);
+}
+.diag-wrap .diag-left img,.diag-wrap .diag-right img{
+  width:100%;height:100%;object-fit:cover;
+}
+.diag-wrap .diag-line{
+  position:absolute;top:0;bottom:0;
+  left:45%;width:10%;
+  background:#1A1A2E;
+  clip-path:polygon(30% 0,70% 0,40% 100%,0% 100%);
+  z-index:2;
+}
+
+/* L7: インセットパネル（小さいパネルが大きいパネルに重なる） */
+.p-inset{position:relative;}
+.p-inset .inset{
+  position:absolute;
+  bottom:8%;right:5%;
+  width:40%;
+  border:3px solid #1A1A2E;
+  border-radius:8px;
+  overflow:hidden;
+  box-shadow:4px 4px 0 rgba(26,26,46,0.12);
+  z-index:3;
+}
+.p-inset .inset img{width:100%;display:block;}
+
+/* ═══════════════════════════════════════
+   BUBBLES
+   ═══════════════════════════════════════ */
+.b{
+  position:absolute;background:#fff;
+  border:2.5px solid #1A1A2E;border-radius:20px;
+  padding:12px 18px;
+  font-size:clamp(12px,3vw,16px);font-weight:700;line-height:1.6;
+  box-shadow:4px 4px 0 rgba(26,26,46,0.08);z-index:3;max-width:60%;
+}
+.b::after{content:'';position:absolute;width:0;height:0;}
+.b::before{content:'';position:absolute;z-index:1;}
+/* tail bottom */
+.b.t-b::after{bottom:-13px;left:28px;border-left:10px solid transparent;border-right:10px solid transparent;border-top:14px solid #1A1A2E;}
+.b.t-b::before{bottom:-10px;left:29px;border-left:9px solid transparent;border-right:9px solid transparent;border-top:12px solid #fff;}
+/* tail left */
+.b.t-l::after{left:-12px;top:22px;border-top:9px solid transparent;border-bottom:9px solid transparent;border-right:13px solid #1A1A2E;}
+.b.t-l::before{left:-9px;top:23px;border-top:8px solid transparent;border-bottom:8px solid transparent;border-right:11px solid #fff;}
+/* tail right */
+.b.t-r::after{right:-12px;top:22px;border-top:9px solid transparent;border-bottom:9px solid transparent;border-left:13px solid #1A1A2E;}
+.b.t-r::before{right:-9px;top:23px;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:11px solid #fff;}
+.em{color:#E04848;font-weight:900;}
+
+/* ギザギザ叫び */
+.b-shout{
+  position:absolute;z-index:3;max-width:55%;text-align:center;
+  font-size:clamp(13px,3.2vw,17px);font-weight:900;line-height:1.5;
+  padding:22px 26px;background:#fff;border:3px solid #1A1A2E;
+  clip-path:polygon(50% 0%,61% 8%,72% 2%,78% 12%,90% 8%,92% 20%,100% 28%,95% 38%,100% 48%,96% 58%,100% 68%,94% 76%,98% 86%,88% 90%,82% 100%,72% 94%,60% 100%,50% 94%,40% 100%,28% 94%,18% 100%,12% 90%,2% 86%,6% 76%,0% 68%,4% 58%,0% 48%,5% 38%,0% 28%,8% 20%,10% 8%,22% 12%,28% 2%,39% 8%);
+  filter:drop-shadow(3px 3px 0 rgba(26,26,46,0.1));
+}
+
+/* もくもく思考 */
+.b-think{
+  position:absolute;z-index:3;max-width:55%;text-align:center;
+  font-size:clamp(12px,3vw,15px);font-weight:500;line-height:1.7;color:#6B7280;
+  padding:16px 22px;background:#fff;border:2px solid #D4DAE0;
+  border-radius:40% 60% 50% 40% / 50% 40% 60% 50%;
+  box-shadow:2px 2px 0 rgba(0,0,0,0.05);
+}
+.b-think::after{content:'';position:absolute;bottom:-18px;left:30px;width:12px;height:12px;background:#fff;border:2px solid #D4DAE0;border-radius:50%;}
+.b-think::before{content:'';position:absolute;bottom:-28px;left:24px;width:7px;height:7px;background:#fff;border:2px solid #D4DAE0;border-radius:50%;}
+
+/* ═══════════════════════════════════════
+   SFX / ONOMATOPOEIA
+   ═══════════════════════════════════════ */
+.sfx{position:absolute;font-weight:900;z-index:4;pointer-events:none;letter-spacing:0.15em;opacity:0.85;}
+.sfx-shake{animation:sfx-shake 0.4s ease-in-out infinite alternate;}
+@keyframes sfx-shake{0%{transform:translate(0,0) rotate(-2deg)}100%{transform:translate(1px,-1px) rotate(2deg)}}
+.sfx-pulse{animation:sfx-pulse 1.5s ease-in-out infinite;}
+@keyframes sfx-pulse{0%,100%{opacity:0.7;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+
+/* ═══════════════════════════════════════
+   NARRATION
+   ═══════════════════════════════════════ */
+.nr{
+  padding:36px 28px;text-align:center;
+  font-size:clamp(14px,3.5vw,17px);line-height:2;font-weight:500;
+  opacity:0;transform:translateY(20px);
+  transition:opacity 0.7s ease,transform 0.7s ease;
+}
+.nr.v{opacity:1;transform:translateY(0);}
+.nr-d{background:#1A1A2E;color:#E8E6E3;}
+.nr-w{background:linear-gradient(180deg,#FFF9F3,#FFF5ED);color:#5C4A32;}
+.nr-g{background:linear-gradient(180deg,#F0FAF8,#E6F5F2);color:#1A4A42;}
+.nr-dram{
+  background:#1A1A2E;color:#fff;position:relative;overflow:hidden;padding:48px 28px;
+}
+.nr-dram::before{
+  content:'';position:absolute;top:50%;left:50%;
+  width:150vmax;height:150vmax;transform:translate(-50%,-50%);
+  background:repeating-conic-gradient(rgba(255,255,255,0.03) 0deg 3deg,transparent 3deg 9deg);
+  pointer-events:none;
+}
+.nr-dram .big{display:block;font-size:clamp(26px,7vw,40px);font-weight:900;letter-spacing:0.08em;margin:8px 0;position:relative;}
+.nr strong{color:#3DBFB8;font-size:clamp(16px,4vw,20px);}
+
+/* fades */
+.fade-d{height:40px;background:linear-gradient(180deg,#1A1A2E,#fff);}
+.fade-w{height:40px;background:linear-gradient(180deg,#FFF5ED,#fff);}
+.fade-g{height:40px;background:linear-gradient(180deg,#E6F5F2,#fff);}
+
+/* page turn shadow */
+.pturn{height:6px;background:linear-gradient(180deg,rgba(0,0,0,0.05),transparent);}
+
+/* dots */
+.dots{text-align:center;padding:24px 0;font-size:24px;color:#D0CCC6;letter-spacing:20px;background:#fff;}
+
+/* ═══════════════════════════════════════
+   SPEED LINES / HALFTONE / RADIAL
+   ═══════════════════════════════════════ */
+.speed::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 3px,rgba(26,26,46,0.03) 3px 4px);pointer-events:none;z-index:1;}
+.radial::after{content:'';position:absolute;top:50%;left:50%;width:200%;height:200%;transform:translate(-50%,-50%);background:repeating-conic-gradient(rgba(26,26,46,0.04) 0deg 1.5deg,transparent 1.5deg 6deg);pointer-events:none;z-index:1;}
+.halftone::after{content:'';position:absolute;inset:0;background:radial-gradient(circle,rgba(61,191,184,0.06) 1px,transparent 1px);background-size:8px 8px;pointer-events:none;}
+
+/* ═══════════════════════════════════════
+   MID CTA
+   ═══════════════════════════════════════ */
+.mid-cta{
+  background:linear-gradient(180deg,#F0FAF8,#E6F5F2);
+  padding:40px 28px;text-align:center;position:relative;
+}
+.mid-cta p{font-size:clamp(13px,3vw,15px);color:#4A7A72;line-height:1.8;margin-bottom:20px;}
+.mid-cta a{
+  display:inline-block;background:#3DBFB8;color:#fff;
+  font-weight:700;font-size:14px;padding:12px 32px;
+  border-radius:30px;text-decoration:none;
+  box-shadow:0 4px 12px rgba(61,191,184,0.3);
+  transition:transform 0.2s;position:relative;z-index:1;
+}
+.mid-cta a:hover{transform:scale(1.03);}
+
+/* ═══════════════════════════════════════
+   CTA + SPARKLE
+   ═══════════════════════════════════════ */
+.cta{
+  background:linear-gradient(180deg,#fff 0%,#F0FAF8 20%,#E0F5F3 100%);
+  padding:56px 24px 72px;text-align:center;position:relative;overflow:hidden;
+}
+.cta-badge{display:inline-block;font-size:11px;font-weight:700;color:#3DBFB8;border:1.5px solid #3DBFB8;padding:4px 14px;border-radius:20px;margin-bottom:20px;letter-spacing:0.06em;}
+.cta h2{font-size:clamp(22px,5.5vw,32px);font-weight:900;line-height:1.45;margin-bottom:8px;}
+.cta h2 .acc{color:#3DBFB8;}
+.sparkle-zone{position:relative;}
+.sp{position:absolute;width:6px;height:6px;border-radius:50%;pointer-events:none;}
+.sp::before,.sp::after{content:'';position:absolute;background:#3DBFB8;}
+.sp::before{width:2px;height:100%;left:50%;transform:translateX(-50%);border-radius:1px;}
+.sp::after{width:100%;height:2px;top:50%;transform:translateY(-50%);border-radius:1px;}
+.sp-1{top:8%;left:12%;animation:twk 2s ease-in-out infinite;}
+.sp-2{top:15%;right:10%;animation:twk 2s 0.5s ease-in-out infinite;width:4px;height:4px;}
+.sp-3{top:60%;left:8%;animation:twk 2s 1s ease-in-out infinite;width:5px;height:5px;}
+.sp-4{top:55%;right:14%;animation:twk 2s 1.5s ease-in-out infinite;}
+.sp-5{bottom:20%;left:20%;animation:twk 2s 0.8s ease-in-out infinite;width:4px;height:4px;}
+@keyframes twk{0%,100%{opacity:0;transform:scale(0.5) rotate(0)}50%{opacity:1;transform:scale(1) rotate(45deg)}}
+
+/* Book */
+.book-w{perspective:900px;margin:28px auto 24px;display:flex;justify-content:center;}
+.book{width:180px;height:252px;position:relative;transform-style:preserve-3d;transform:rotateY(-12deg);transition:transform 0.4s;}
+.book:hover{transform:rotateY(-4deg);}
+.book-f{width:180px;height:252px;background:linear-gradient(160deg,#1A1A2E,#2A3A5A);border-radius:3px 10px 10px 3px;position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;box-shadow:8px 8px 24px rgba(0,0,0,0.2),2px 2px 6px rgba(0,0,0,0.15);}
+.book-f .bl{font-size:9px;color:#3DBFB8;letter-spacing:0.15em;margin-bottom:10px;text-transform:uppercase;}
+.book-f .bt{font-size:20px;font-weight:900;color:#fff;text-align:center;line-height:1.35;margin-bottom:6px;}
+.book-f .bs{font-size:10px;color:#7EC8C2;text-align:center;}
+.book-f .ba{font-size:10px;color:#8A9AB0;margin-top:14px;}
+.book-sp{position:absolute;left:-18px;width:18px;height:252px;background:linear-gradient(90deg,#12122A,#1A1A2E);transform:rotateY(90deg);transform-origin:right center;border-radius:3px 0 0 3px;}
+
+.cta-pub{font-size:12px;color:#8A9AB0;margin-bottom:20px;}
+.cta-pub strong{color:#1A1A2E;font-weight:700;}
+.cta-desc{font-size:clamp(13px,3vw,15px);color:#6B7280;line-height:1.9;margin-bottom:28px;max-width:380px;margin-left:auto;margin-right:auto;}
+
+/* Form */
+.form{display:flex;flex-direction:column;gap:10px;max-width:360px;margin:0 auto;}
+.form input{width:100%;padding:15px 20px;border:2.5px solid #1A1A2E;border-radius:10px;font-size:15px;font-family:'Noto Sans JP',sans-serif;background:#fff;outline:none;transition:border-color 0.25s,box-shadow 0.25s;box-shadow:3px 3px 0 rgba(26,26,46,0.06);}
+.form input:focus{border-color:#3DBFB8;box-shadow:3px 3px 0 rgba(61,191,184,0.15);}
+.form input::placeholder{color:#B0B8C0;}
+.btn{display:block;width:100%;padding:17px;margin-top:4px;background:linear-gradient(135deg,#3DBFB8,#2A9D97);color:#fff;font-size:16px;font-weight:900;font-family:'Zen Maru Gothic',sans-serif;border:3px solid #1A1A2E;border-radius:10px;cursor:pointer;position:relative;overflow:hidden;box-shadow:4px 4px 0 rgba(26,26,46,0.15);transition:transform 0.15s,box-shadow 0.15s;letter-spacing:0.03em;}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 rgba(26,26,46,0.18);}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 rgba(26,26,46,0.15);}
+.btn::after{content:'';position:absolute;top:0;left:-120%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.25),transparent);animation:shim 2.8s infinite;}
+@keyframes shim{0%{left:-120%}100%{left:120%}}
+.form-note{font-size:11px;color:#A0AAB4;margin-top:12px;line-height:1.6;}
+.trust{display:flex;justify-content:center;gap:24px;margin-top:28px;flex-wrap:wrap;}
+.trust-i{display:flex;align-items:center;gap:6px;font-size:11px;color:#8A9AB0;}
+.trust-i .ico{width:16px;height:16px;background:#E0F5F3;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;color:#3DBFB8;font-weight:900;}
+
+/* Footer */
+footer{text-align:center;padding:28px 24px;font-size:11px;color:#666;background:#1A1A2E;}
+footer::before{content:'';position:absolute;top:-20px;left:0;right:0;height:20px;background:linear-gradient(180deg,transparent,#1A1A2E);}
+
+/* ═══════════════════════════════════════
+   MOBILE / DESKTOP
+   ═══════════════════════════════════════ */
+@media(max-width:520px){
+  .wrap{max-width:100%;}
+  .b,.b-shout,.b-think{padding:10px 14px;}
+  .b{border-radius:16px;}
+  .book{width:150px;height:210px;}
+  .book-f{width:150px;height:210px;padding:16px;}
+  .book-sp{height:210px;width:15px;left:-15px;}
+  .book-f .bt{font-size:17px;}
+  .diag-wrap{height:220px;}
+  .sfx{font-size:80% !important;}
+}
+@media(min-width:521px){
+  .wrap{border-radius:4px;overflow:hidden;margin-top:20px;margin-bottom:20px;box-shadow:0 0 40px rgba(0,0,0,0.3);}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<!-- ━━━ HERO ━━━ -->
+<section class="hero">
+  <span class="hero-tag">漫画で読む</span>
+  <h1><span class="acc">変わらない</span>勇気</h1>
+  <p class="hero-lead">変わろうとして、疲れてしまったあなたへ。<br>もうひとつの選択肢があります。</p>
+  <div class="hero-scroll"><span>SCROLL</span><div class="arr"></div></div>
+</section>
+
+
+<!-- ════════════════════════════
+     PROLOGUE: "変わらなきゃ"の呪い
+     ════════════════════════════ -->
+<div class="ch">
+  <div class="ch-l"></div>
+  <span class="ch-n">PROLOGUE</span>
+  <span class="ch-t">"変わらなきゃ"の呪い</span>
+  <div class="ch-l"></div>
+</div>
+
+<div class="nr nr-d">
+  これは、「変わらなきゃ」と思い続けた<br>
+  ひとりの女性の、小さな物語です。
+</div>
+<div class="fade-d"></div>
+
+<!-- P1: 本に囲まれた女性（フルパネル） -->
+<div class="p tone">
+  <img src="manga-images/panel-1.webp" alt="" loading="lazy">
+  <div class="b t-r" style="top:4%;left:4%;">
+    また、<span class="em">変わろう</span>として、<br>失敗した...
+  </div>
+</div>
+
+<!-- P2: 失敗の4ビネット（フルパネル） -->
+<div class="p">
+  <img src="manga-images/panel-2.webp" alt="" loading="lazy">
+  <div class="b t-b" style="bottom:2%;left:50%;transform:translateX(-50%);text-align:center;max-width:70%;">
+    みんなが言う通りに<br>やってるのに...
+  </div>
+</div>
+
+<div class="pturn"></div>
+
+<!-- ════════════════════════════
+     CHAPTER 1: 終わらない自己改善ループ
+     ════════════════════════════ -->
+<div class="ch">
+  <div class="ch-l"></div>
+  <span class="ch-n">CHAPTER 01</span>
+  <span class="ch-t">終わらないループ</span>
+  <div class="ch-l"></div>
+</div>
+
+<!-- P3+P4: 朝5時 + ジョギング（斜めカットパネル） -->
+<div class="diag-wrap">
+  <div class="diag-left"><img src="manga-images/panel-n02.webp" alt="" loading="lazy"></div>
+  <div class="diag-line"></div>
+  <div class="diag-right"><img src="manga-images/panel-n03.webp" alt="" loading="lazy"></div>
+</div>
+
+<!-- P5: ソファに倒れ込む + 習慣トラッカー（2列均等） -->
+<div class="grid-2">
+  <div class="cell">
+    <img src="manga-images/panel-n12.webp" alt="" loading="lazy">
+  </div>
+  <div class="cell">
+    <img src="manga-images/panel-n04.webp" alt="" loading="lazy">
+  </div>
+</div>
+
+<div class="nr nr-w">
+  ヨガ、ジャーナリング、早起き、ランニング——<br>
+  全部試した。<br>
+  全部、<span class="em">続かなかった。</span>
+</div>
+<div class="fade-w"></div>
+
+<!-- P6: 深夜のSNS比較（フルブリード + インセット） -->
+<div class="p p-inset">
+  <img src="manga-images/panel-n01.webp" alt="" loading="lazy">
+  <div class="inset">
+    <img src="manga-images/panel-n04.webp" alt="" loading="lazy">
+  </div>
+  <div class="b-think" style="top:8%;right:5%;">
+    みんな輝いてるのに...<br>
+    私だけ、<span class="em" style="color:#E04848;font-weight:900;">止まってる</span>
+  </div>
+  <span class="sfx sfx-pulse" style="bottom:8%;left:5%;font-size:clamp(18px,5vw,28px);color:rgba(224,72,72,0.15);writing-mode:vertical-rl;">ザワ...</span>
+</div>
+
+<!-- P7: 雨の夜、机に突っ伏す（フルパネル + 集中線） -->
+<div class="p radial">
+  <img src="manga-images/panel-3.webp" alt="" loading="lazy">
+  <div class="b-shout" style="top:5%;right:4%;">
+    何をやっても変われない<br>自分が、<span class="em">嫌い</span>
+  </div>
+  <span class="sfx sfx-shake" style="bottom:10%;left:4%;font-size:clamp(22px,6vw,34px);color:rgba(26,26,46,0.08);writing-mode:vertical-rl;">ドドド</span>
+</div>
+
+<div class="dots">・・・</div>
+
+
+<!-- ════════════════════════════
+     CHAPTER 2: 転機 — カフェでの一言
+     ════════════════════════════ -->
+<div class="ch">
+  <div class="ch-l"></div>
+  <span class="ch-n">CHAPTER 02</span>
+  <span class="ch-t">転機</span>
+  <div class="ch-l"></div>
+</div>
+
+<div class="nr nr-w">
+  ある日、友人と入ったカフェで。<br>
+  たった一言が、すべてを変えた。
+</div>
+<div class="fade-w"></div>
+
+<!-- P8: カフェ外観（フルブリードワイド） -->
+<div class="p-bleed">
+  <img src="manga-images/panel-n05.webp" alt="" loading="lazy">
+</div>
+
+<!-- P9: カフェ会話（フルパネル） -->
+<div class="p">
+  <img src="manga-images/panel-4.webp" alt="" loading="lazy">
+  <div class="b t-b" style="top:2%;left:50%;transform:translateX(-50%);text-align:center;background:#FFF9F0;border-color:#C8A96E;">
+    ねぇ、そもそも...<br>
+    <span class="em">変わる必要</span>ある？
+  </div>
+</div>
+
+<!-- P10: 友人クローズアップ + 驚き顔（2:1不均等グリッド） -->
+<div class="grid-21">
+  <div class="cell">
+    <img src="manga-images/panel-n06.webp" alt="" loading="lazy">
+    <div class="b t-l" style="top:8%;right:8%;max-width:50%;">
+      あなたは<span class="em">もう十分</span>よ
+    </div>
+  </div>
+  <div class="cell">
+    <img src="manga-images/panel-5.webp" alt="" loading="lazy">
+  </div>
+</div>
+
+<div class="pturn"></div>
+
+<!-- P11: 衝撃の瞬間 -->
+<div class="nr nr-dram v">
+  その一言が、胸に刺さった。<br><br>
+  <span class="big" style="color:#3DBFB8;">変わらなくて...いい？</span>
+</div>
+
+<!-- MID CTA -->
+<div class="mid-cta halftone">
+  <p>
+    もし今、「変わらなきゃ」に<br>
+    疲れているなら。<br>
+    この本があなたの味方になります。
+  </p>
+  <a href="#cta-form">書籍を無料で受け取る</a>
+</div>
+
+
+<!-- ════════════════════════════
+     CHAPTER 3: "変わらない"という選択
+     ════════════════════════════ -->
+<div class="ch">
+  <div class="ch-l"></div>
+  <span class="ch-n">CHAPTER 03</span>
+  <span class="ch-t">変わらないという選択</span>
+  <div class="ch-l"></div>
+</div>
+
+<div class="nr nr-g">
+  「変わらなきゃ」と思い込んでいた。<br>
+  でも本当に必要だったのは——
+</div>
+<div class="fade-g"></div>
+
+<!-- P12: 夕焼け帰り道（縦長フルパネル） -->
+<div class="p">
+  <img src="manga-images/panel-n07.webp" alt="" loading="lazy">
+  <div class="b t-r" style="top:5%;left:5%;max-width:60%;">
+    自分のままでいることに、<br>
+    <span class="em">勇気がいる</span>なんて<br>
+    思ってなかった。
+  </div>
+</div>
+
+<!-- P13: 穏やかな朝 + 鏡 + お茶（L字グリッド） -->
+<div class="grid-L">
+  <div class="cell cell-big">
+    <img src="manga-images/panel-n08.webp" alt="" loading="lazy">
+  </div>
+  <div class="cell cell-top">
+    <img src="manga-images/panel-n10.webp" alt="" loading="lazy">
+  </div>
+  <div class="cell">
+    <img src="manga-images/panel-n09.webp" alt="" loading="lazy">
+  </div>
+</div>
+
+<div class="nr nr-g">
+  頑張るのをやめたら、<br>
+  なぜか、朝が変わった。
+</div>
+<div class="fade-g"></div>
+
+<!-- P14: 自分を抱きしめる（フルパネル + スピードライン） -->
+<div class="p speed">
+  <img src="manga-images/panel-6.webp" alt="" loading="lazy">
+  <div class="b t-r" style="top:5%;left:5%;max-width:55%;">
+    頑張るのをやめたら、<br>
+    なぜか、<span class="em">動き始めた。</span>
+  </div>
+  <span class="sfx" style="bottom:6%;right:5%;font-size:clamp(14px,4vw,20px);color:rgba(61,191,184,0.25);letter-spacing:0.3em;">フワッ</span>
+</div>
+
+<div class="pturn"></div>
+
+
+<!-- ════════════════════════════
+     EPILOGUE: 動き始めた人生
+     ════════════════════════════ -->
+<div class="ch">
+  <div class="ch-l"></div>
+  <span class="ch-n">EPILOGUE</span>
+  <span class="ch-t">動き始めた人生</span>
+  <div class="ch-l"></div>
+</div>
+
+<!-- P15: ベランダ + 桜並木（斜めカット） -->
+<div class="diag-wrap">
+  <div class="diag-left"><img src="manga-images/panel-7.webp" alt="" loading="lazy"></div>
+  <div class="diag-line"></div>
+  <div class="diag-right"><img src="manga-images/panel-n11.webp" alt="" loading="lazy"></div>
+</div>
+
+<!-- 締めナレーション -->
+<div class="nr nr-dram v">
+  変わることが、正解じゃなかった。<br><br>
+  <span class="big" style="color:#3DBFB8;">「変わらない」という勇気が、</span>
+  <span class="big" style="color:#fff;">人生を動かした。</span>
+</div>
+
+
+<!-- ━━━ CTA ━━━ -->
+<section class="cta halftone sparkle-zone" id="cta-form">
+  <div class="sp sp-1"></div><div class="sp sp-2"></div><div class="sp sp-3"></div><div class="sp sp-4"></div><div class="sp sp-5"></div>
+  <div style="position:relative;z-index:1;">
+    <span class="cta-badge">2026年6月 扶桑社より発売</span>
+    <h2>この考え方を、<br><span class="acc">17のワーク</span>で<br>体験してみませんか？</h2>
+    <div class="book-w">
+      <div class="book">
+        <div class="book-sp"></div>
+        <div class="book-f">
+          <span class="bl">Keisuke Kudo</span>
+          <span class="bt">変わらない<br>勇気</span>
+          <span class="bs">〜勇気の17ワーク〜</span>
+          <span class="ba">工藤 圭介</span>
+        </div>
+      </div>
+    </div>
+    <p class="cta-pub"><strong>扶桑社</strong>より商業出版</p>
+    <p class="cta-desc">「変わらなきゃ」に疲れたあなたのための一冊。<br>17のワークを通じて、自分のままでいる勇気を体験できます。</p>
+    <form class="form" action="#" method="POST">
+      <input type="text" name="name" placeholder="お名前" required>
+      <input type="email" name="email" placeholder="メールアドレス" required>
+      <button type="submit" class="btn">書籍を無料で受け取る</button>
+    </form>
+    <p class="form-note">※ 登録後すぐにメールでお届けします。<br>※ いつでも解除できます。</p>
+    <div class="trust">
+      <div class="trust-i"><div class="ico">✓</div>無料</div>
+      <div class="trust-i"><div class="ico">✓</div>即日配信</div>
+      <div class="trust-i"><div class="ico">✓</div>解除自由</div>
+    </div>
+  </div>
+</section>
+
+<footer>&copy; 2026 Keisuke Kudo. All rights reserved.</footer>
+
+</div><!-- /wrap -->
+
+<script>
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('v'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll('.p,.p-bleed,.p-inset,.grid-2,.grid-21,.grid-3,.grid-L,.diag-wrap,.nr').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
