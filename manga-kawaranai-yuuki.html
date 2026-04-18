@@ -9,563 +9,584 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{
-  background:#F5F0EB;
+  background:#fff;
   font-family:'Zen Maru Gothic','Noto Sans JP',sans-serif;
-  color:#2D2B29;
+  color:#1A1A2E;
   overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── Layout ── */
+.wrapper{
+  max-width:520px;
+  margin:0 auto;
 }
 
 /* ── Hero ── */
 .hero{
-  min-height:60vh;
+  position:relative;
+  padding:56px 24px 48px;
+  text-align:center;
+  background:linear-gradient(180deg,#F8FFFE 0%,#fff 100%);
+}
+.hero-eyecatch{
+  display:inline-block;
+  font-size:11px;
+  font-weight:700;
+  color:#fff;
+  background:#3DBFB8;
+  padding:5px 16px;
+  border-radius:30px;
+  letter-spacing:0.08em;
+  margin-bottom:20px;
+}
+.hero h1{
+  font-size:clamp(32px,8vw,52px);
+  font-weight:900;
+  line-height:1.25;
+  letter-spacing:-0.02em;
+  margin-bottom:16px;
+}
+.hero h1 .accent{color:#3DBFB8;}
+.hero-lead{
+  font-size:clamp(14px,3.5vw,17px);
+  color:#6B7280;
+  line-height:1.9;
+  font-weight:400;
+}
+.hero-scroll{
+  margin-top:32px;
   display:flex;
   flex-direction:column;
   align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:60px 24px 40px;
-  background:linear-gradient(180deg,#fff 0%,#F5F0EB 100%);
-  position:relative;
+  gap:6px;
+  color:#B0B8C0;
+  font-size:11px;
+  letter-spacing:0.1em;
+  animation:float 2s ease-in-out infinite;
 }
-.hero::after{
-  content:'';
-  position:absolute;
-  bottom:0;left:0;right:0;
-  height:80px;
-  background:linear-gradient(180deg,transparent,#F5F0EB);
+.hero-scroll .arrow{
+  width:20px;height:20px;
+  border-right:2px solid #B0B8C0;
+  border-bottom:2px solid #B0B8C0;
+  transform:rotate(45deg);
 }
-.hero-badge{
-  display:inline-block;
-  background:#3DBFB8;
-  color:#fff;
-  font-size:13px;
-  font-weight:700;
-  padding:6px 18px;
-  border-radius:20px;
-  margin-bottom:24px;
-  letter-spacing:0.05em;
-}
-.hero h1{
-  font-family:'Zen Maru Gothic',sans-serif;
-  font-size:clamp(28px,6vw,48px);
-  font-weight:900;
-  line-height:1.3;
-  color:#1A1A2E;
-  margin-bottom:16px;
-}
-.hero h1 em{
-  font-style:normal;
-  color:#3DBFB8;
-}
-.hero-sub{
-  font-size:clamp(14px,3vw,18px);
-  color:#6B6966;
-  line-height:1.8;
-  max-width:500px;
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(6px)}
 }
 
-/* ── Manga Container ── */
-.manga-container{
-  max-width:720px;
-  margin:0 auto;
-  padding:0 16px 40px;
-}
-
-/* ── Panel ── */
-.panel{
-  position:relative;
-  margin-bottom:4px;
-  border:3px solid #1A1A2E;
-  border-radius:4px;
-  overflow:hidden;
-  opacity:0;
-  transform:translateY(30px);
-  transition:opacity 0.7s ease,transform 0.7s ease;
+/* ── Manga Flow ── */
+.manga{
   background:#fff;
 }
-.panel.visible{
-  opacity:1;
-  transform:translateY(0);
+.panel{
+  position:relative;
+  overflow:hidden;
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity 0.6s ease,transform 0.6s ease;
 }
-.panel-img{
+.panel.visible{opacity:1;transform:translateY(0);}
+.panel img{
   width:100%;
   display:block;
-  object-fit:cover;
-}
-.panel-wide{
-  aspect-ratio:4/3;
-}
-.panel-square{
-  aspect-ratio:1/1;
-  max-width:480px;
-  margin:0 auto;
 }
 
-/* ── Speech Bubble ── */
+/* ── Speech Bubbles (Pro) ── */
 .bubble{
   position:absolute;
   background:#fff;
-  border:2.5px solid #1A1A2E;
-  border-radius:18px;
-  padding:12px 18px;
-  font-size:clamp(13px,2.8vw,16px);
+  border-radius:20px;
+  padding:14px 20px;
+  font-size:clamp(13px,3.2vw,17px);
   font-weight:700;
-  line-height:1.6;
-  max-width:55%;
+  line-height:1.65;
+  box-shadow:0 4px 20px rgba(0,0,0,0.12),0 1px 4px rgba(0,0,0,0.08);
   z-index:2;
-  box-shadow:2px 3px 0 rgba(0,0,0,0.08);
+  max-width:60%;
 }
 .bubble::after{
   content:'';
   position:absolute;
   width:0;height:0;
 }
-.bubble.tail-bottom::after{
-  bottom:-14px;left:30px;
-  border-left:8px solid transparent;
-  border-right:8px solid transparent;
-  border-top:14px solid #1A1A2E;
+/* tail variants */
+.bubble.tb::after{
+  bottom:-12px;left:28px;
+  border-left:10px solid transparent;
+  border-right:10px solid transparent;
+  border-top:13px solid #fff;
+  filter:drop-shadow(0 2px 2px rgba(0,0,0,0.06));
 }
-.bubble.tail-bottom::before{
-  content:'';
-  position:absolute;
-  bottom:-10px;left:31px;
-  border-left:7px solid transparent;
-  border-right:7px solid transparent;
-  border-top:12px solid #fff;
-  z-index:1;
-}
-.bubble.tail-left::after{
-  left:-14px;top:20px;
-  border-top:8px solid transparent;
-  border-bottom:8px solid transparent;
-  border-right:14px solid #1A1A2E;
-}
-.bubble.tail-left::before{
-  content:'';
-  position:absolute;
-  left:-10px;top:21px;
-  border-top:7px solid transparent;
-  border-bottom:7px solid transparent;
+.bubble.tl::after{
+  left:-11px;top:22px;
+  border-top:9px solid transparent;
+  border-bottom:9px solid transparent;
   border-right:12px solid #fff;
-  z-index:1;
+  filter:drop-shadow(-2px 0 2px rgba(0,0,0,0.06));
 }
-.bubble .red{color:#CC3333;font-weight:900;}
+.bubble.tr::after{
+  right:-11px;top:22px;
+  border-top:9px solid transparent;
+  border-bottom:9px solid transparent;
+  border-left:12px solid #fff;
+  filter:drop-shadow(2px 0 2px rgba(0,0,0,0.06));
+}
+.bubble .em{
+  color:#E04848;
+  font-weight:900;
+}
 
-/* ── Narration Box ── */
-.narration{
-  background:#1A1A2E;
-  color:#F5F0EB;
+/* ── Narration ── */
+.narr{
+  padding:36px 28px;
   text-align:center;
-  padding:20px 24px;
-  font-size:clamp(14px,3vw,17px);
+  font-size:clamp(14px,3.5vw,17px);
+  line-height:2;
   font-weight:500;
-  line-height:1.8;
-  letter-spacing:0.04em;
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity 0.7s ease,transform 0.7s ease;
 }
-.narration.light{
-  background:linear-gradient(135deg,#E8F5F3,#F0F7F6);
-  color:#1A1A2E;
+.narr.visible{opacity:1;transform:translateY(0);}
+.narr-dark{
+  background:#1A1A2E;
+  color:#E8E6E3;
 }
-.narration.warm{
-  background:linear-gradient(135deg,#FFF8F0,#FFF3E6);
+.narr-warm{
+  background:linear-gradient(180deg,#FFF9F3,#FFF5ED);
   color:#5C4A32;
 }
-
-/* ── Transition Dividers ── */
-.divider{
-  text-align:center;
-  padding:32px 0;
-  font-size:32px;
-  color:#C4BFB8;
-  letter-spacing:16px;
+.narr-light{
+  background:linear-gradient(180deg,#F0FAF8,#E6F5F2);
+  color:#1A4A42;
 }
+.narr-end{
+  background:#1A1A2E;
+  color:#fff;
+}
+.narr-end strong{
+  color:#3DBFB8;
+  font-size:clamp(16px,4vw,20px);
+}
+
+/* ── Dots divider ── */
+.dots{
+  text-align:center;
+  padding:28px 0;
+  font-size:24px;
+  color:#D0CCC6;
+  letter-spacing:20px;
+  background:#fff;
+}
+
+/* ── Mid CTA ── */
+.mid-cta{
+  background:linear-gradient(180deg,#F0FAF8,#E6F5F2);
+  padding:40px 28px;
+  text-align:center;
+}
+.mid-cta p{
+  font-size:clamp(13px,3vw,15px);
+  color:#4A7A72;
+  line-height:1.8;
+  margin-bottom:20px;
+}
+.mid-cta a{
+  display:inline-block;
+  background:#3DBFB8;
+  color:#fff;
+  font-weight:700;
+  font-size:14px;
+  padding:12px 32px;
+  border-radius:30px;
+  text-decoration:none;
+  box-shadow:0 4px 12px rgba(61,191,184,0.3);
+  transition:transform 0.2s;
+}
+.mid-cta a:hover{transform:scale(1.03);}
 
 /* ── CTA Section ── */
-.cta-section{
-  background:linear-gradient(180deg,#F5F0EB 0%,#E8F5F3 30%,#D4EDE9 100%);
-  padding:60px 24px 80px;
+.cta{
+  background:linear-gradient(180deg,#fff 0%,#F0FAF8 20%,#E0F5F3 100%);
+  padding:56px 24px 72px;
   text-align:center;
 }
-.cta-inner{
-  max-width:520px;
-  margin:0 auto;
-}
-.cta-headline{
-  font-family:'Zen Maru Gothic',sans-serif;
-  font-size:clamp(20px,4.5vw,28px);
-  font-weight:900;
-  color:#1A1A2E;
-  line-height:1.5;
-  margin-bottom:24px;
-}
-.cta-headline em{
-  font-style:normal;
+.cta-badge{
+  display:inline-block;
+  font-size:11px;
+  font-weight:700;
   color:#3DBFB8;
+  border:1.5px solid #3DBFB8;
+  padding:4px 14px;
+  border-radius:20px;
+  margin-bottom:20px;
+  letter-spacing:0.06em;
 }
-
-/* Book Mockup */
-.book-mockup{
-  perspective:800px;
-  margin:32px auto;
-  width:200px;
-  height:280px;
-}
-.book-3d{
-  width:200px;
-  height:280px;
-  position:relative;
-  transform:rotateY(-15deg);
-  transform-style:preserve-3d;
-  transition:transform 0.5s ease;
-}
-.book-3d:hover{
-  transform:rotateY(-5deg);
-}
-.book-cover{
-  width:200px;
-  height:280px;
-  background:linear-gradient(135deg,#1A1A2E 0%,#2A3A5A 100%);
-  border-radius:4px 12px 12px 4px;
-  position:absolute;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  padding:24px;
-  box-shadow:6px 6px 20px rgba(0,0,0,0.25);
-}
-.book-cover .book-label{
-  font-size:10px;
-  color:#3DBFB8;
-  letter-spacing:0.15em;
-  text-transform:uppercase;
-  margin-bottom:12px;
-}
-.book-cover .book-title{
-  font-family:'Zen Maru Gothic',sans-serif;
-  font-size:22px;
+.cta h2{
+  font-size:clamp(22px,5.5vw,32px);
   font-weight:900;
-  color:#fff;
-  text-align:center;
-  line-height:1.4;
+  line-height:1.45;
   margin-bottom:8px;
+  letter-spacing:-0.01em;
 }
-.book-cover .book-subtitle{
-  font-size:11px;
-  color:#8ECFC8;
-  text-align:center;
+.cta h2 .accent{color:#3DBFB8;}
+
+/* Book */
+.book-wrap{
+  perspective:900px;
+  margin:28px auto 24px;
+  display:flex;
+  justify-content:center;
 }
-.book-cover .book-author{
-  font-size:11px;
-  color:#A0B0C0;
-  margin-top:16px;
+.book{
+  width:180px;height:252px;
+  position:relative;
+  transform-style:preserve-3d;
+  transform:rotateY(-12deg);
+  transition:transform 0.4s ease;
 }
-.book-spine{
+.book:hover{transform:rotateY(-4deg);}
+.book-face{
+  width:180px;height:252px;
+  background:linear-gradient(160deg,#1A1A2E,#2A3A5A);
+  border-radius:3px 10px 10px 3px;
   position:absolute;
-  left:-20px;
-  width:20px;
-  height:280px;
-  background:linear-gradient(90deg,#151525,#1A1A2E);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:20px;
+  box-shadow:8px 8px 24px rgba(0,0,0,0.2),2px 2px 6px rgba(0,0,0,0.15);
+}
+.book-face .bl{font-size:9px;color:#3DBFB8;letter-spacing:0.15em;margin-bottom:10px;text-transform:uppercase;}
+.book-face .bt{font-size:20px;font-weight:900;color:#fff;text-align:center;line-height:1.35;margin-bottom:6px;}
+.book-face .bs{font-size:10px;color:#7EC8C2;text-align:center;}
+.book-face .ba{font-size:10px;color:#8A9AB0;margin-top:14px;}
+.book-spine{
+  position:absolute;left:-18px;
+  width:18px;height:252px;
+  background:linear-gradient(90deg,#12122A,#1A1A2E);
   transform:rotateY(90deg);
   transform-origin:right center;
-  border-radius:4px 0 0 4px;
+  border-radius:3px 0 0 3px;
 }
 
+.cta-pub{
+  font-size:12px;
+  color:#8A9AB0;
+  margin-bottom:20px;
+}
+.cta-pub strong{color:#1A1A2E;font-weight:700;}
+
 .cta-desc{
-  font-size:clamp(13px,2.8vw,15px);
-  color:#6B6966;
-  line-height:1.8;
-  margin-bottom:32px;
+  font-size:clamp(13px,3vw,15px);
+  color:#6B7280;
+  line-height:1.9;
+  margin-bottom:28px;
+  max-width:380px;
+  margin-left:auto;margin-right:auto;
 }
 
 /* Form */
-.cta-form{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  max-width:380px;
+.form{
+  display:flex;flex-direction:column;
+  gap:10px;
+  max-width:360px;
   margin:0 auto;
 }
-.cta-form input{
+.form input{
   width:100%;
-  padding:14px 20px;
-  border:2px solid #D4CFC8;
-  border-radius:12px;
+  padding:15px 20px;
+  border:1.5px solid #D4DAE0;
+  border-radius:10px;
   font-size:15px;
   font-family:'Noto Sans JP',sans-serif;
   background:#fff;
-  transition:border-color 0.3s;
   outline:none;
+  transition:border-color 0.25s,box-shadow 0.25s;
 }
-.cta-form input:focus{
+.form input:focus{
   border-color:#3DBFB8;
+  box-shadow:0 0 0 3px rgba(61,191,184,0.12);
 }
-.cta-form input::placeholder{
-  color:#B0ADA8;
-}
-.cta-btn{
-  display:block;
-  width:100%;
-  padding:18px;
+.form input::placeholder{color:#B0B8C0;}
+
+.btn{
+  display:block;width:100%;
+  padding:17px;
+  margin-top:4px;
   background:linear-gradient(135deg,#3DBFB8,#2A9D97);
   color:#fff;
-  font-size:17px;
+  font-size:16px;
   font-weight:900;
   font-family:'Zen Maru Gothic',sans-serif;
-  border:none;
-  border-radius:12px;
+  border:none;border-radius:10px;
   cursor:pointer;
-  position:relative;
-  overflow:hidden;
-  transition:transform 0.2s,box-shadow 0.2s;
-  box-shadow:0 4px 15px rgba(61,191,184,0.35);
-  margin-top:4px;
+  position:relative;overflow:hidden;
+  box-shadow:0 4px 16px rgba(61,191,184,0.35);
+  transition:transform 0.15s,box-shadow 0.15s;
+  letter-spacing:0.03em;
 }
-.cta-btn:hover{
+.btn:hover{
   transform:translateY(-2px);
-  box-shadow:0 6px 25px rgba(61,191,184,0.45);
+  box-shadow:0 6px 24px rgba(61,191,184,0.45);
 }
-.cta-btn::after{
-  content:'';
-  position:absolute;
-  top:0;left:-100%;
+.btn::after{
+  content:'';position:absolute;
+  top:0;left:-120%;
   width:100%;height:100%;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);
-  animation:shimmer 3s infinite;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.25),transparent);
+  animation:shimmer 2.8s infinite;
 }
-@keyframes shimmer{
-  0%{left:-100%}
-  100%{left:100%}
+@keyframes shimmer{0%{left:-120%}100%{left:120%}}
+
+.form-note{
+  font-size:11px;
+  color:#A0AAB4;
+  margin-top:12px;
+  line-height:1.6;
 }
-.cta-note{
-  font-size:12px;
-  color:#A09D98;
-  margin-top:16px;
+
+/* ── Trust ── */
+.trust{
+  display:flex;
+  justify-content:center;
+  gap:24px;
+  margin-top:28px;
+  flex-wrap:wrap;
+}
+.trust-item{
+  display:flex;align-items:center;gap:6px;
+  font-size:11px;color:#8A9AB0;
+}
+.trust-item .ico{
+  width:16px;height:16px;
+  background:#E0F5F3;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;color:#3DBFB8;font-weight:900;
 }
 
 /* ── Footer ── */
-.footer{
+footer{
   text-align:center;
-  padding:32px 24px;
-  font-size:12px;
-  color:#A09D98;
-  background:#F5F0EB;
+  padding:28px 24px;
+  font-size:11px;
+  color:#B0B8C0;
+  background:#F8FAFE;
 }
 
-/* ── Panel-specific positions ── */
-.p1-bubble{top:12%;right:8%;}
-.p2-bubble{bottom:10%;left:6%;}
-.p3-bubble{top:10%;left:6%;}
-.p4-bubble-friend{top:8%;right:5%;background:#FFF8F0;border-color:#C4A97D;}
-.p4-bubble-friend::after{border-top-color:#C4A97D;}
-.p4-bubble-friend::before{border-top-color:#FFF8F0;}
-.p5-bubble{bottom:10%;left:50%;transform:translateX(-50%);text-align:center;}
-.p6-bubble{top:10%;left:50%;transform:translateX(-50%);text-align:center;max-width:70%;}
-.p7-bubble{top:8%;right:6%;max-width:50%;}
-
-/* ── Responsive ── */
-@media(max-width:480px){
-  .hero{min-height:50vh;padding:48px 20px 32px;}
-  .bubble{font-size:12px;padding:8px 12px;max-width:65%;}
-  .panel-square{max-width:100%;}
-  .book-mockup{width:160px;height:224px;}
-  .book-3d,.book-cover{width:160px;height:224px;}
-  .book-spine{height:224px;width:16px;left:-16px;}
-  .book-cover .book-title{font-size:18px;}
+/* ── Bubble positions per panel ── */
+.b1{top:4%;left:4%;}
+.b2{bottom:2%;left:50%;transform:translateX(-50%);text-align:center;max-width:70%;}
+.b3{top:5%;right:5%;max-width:55%;}
+.b4{top:2%;left:50%;transform:translateX(-50%);text-align:center;
+  background:#FFF9F0;
+  box-shadow:0 4px 20px rgba(180,140,60,0.10),0 1px 4px rgba(0,0,0,0.06);
 }
+.b4::after{border-top-color:#FFF9F0 !important;}
+.b5{bottom:2%;left:50%;transform:translateX(-50%);text-align:center;max-width:65%;}
+.b6{top:5%;left:5%;text-align:left;max-width:60%;}
+.b7{top:2%;left:5%;max-width:50%;}
 
-/* ── Scroll Animation ── */
-.reveal{
-  opacity:0;
-  transform:translateY(40px);
-  transition:opacity 0.8s ease,transform 0.8s ease;
+/* ── Mobile fine-tuning ── */
+@media(max-width:520px){
+  .wrapper{max-width:100%;}
+  .bubble{padding:10px 14px;border-radius:16px;}
+  .book{width:150px;height:210px;}
+  .book-face{width:150px;height:210px;padding:16px;}
+  .book-spine{height:210px;width:15px;left:-15px;}
+  .book-face .bt{font-size:17px;}
 }
-.reveal.visible{
-  opacity:1;
-  transform:translateY(0);
+@media(min-width:521px){
+  .panel img{border-radius:4px;}
+  .manga{padding:0 16px;}
 }
 </style>
 </head>
 <body>
 
-<!-- ━━━ Hero ━━━ -->
+<!-- ━━━ HERO ━━━ -->
 <section class="hero">
-  <span class="hero-badge">漫画で読む</span>
-  <h1><em>変わらない</em>勇気</h1>
-  <p class="hero-sub">
-    変わろうとして、疲れてしまったあなたへ。<br>
-    もうひとつの選択肢があります。
-  </p>
+  <div class="wrapper">
+    <span class="hero-eyecatch">漫画で読む</span>
+    <h1><span class="accent">変わらない</span>勇気</h1>
+    <p class="hero-lead">
+      変わろうとして、疲れてしまったあなたへ。<br>
+      もうひとつの選択肢があります。
+    </p>
+    <div class="hero-scroll">
+      <span>SCROLL</span>
+      <div class="arrow"></div>
+    </div>
+  </div>
 </section>
 
-<!-- ━━━ Manga ━━━ -->
-<div class="manga-container">
+<!-- ━━━ MANGA ━━━ -->
+<div class="manga">
+<div class="wrapper">
 
-  <!-- Narration: 導入 -->
-  <div class="narration">
+  <!-- NARRATION: 導入 -->
+  <div class="narr narr-dark">
     これは、「変わらなきゃ」と思い続けた<br>
     ひとりの女性の、小さな物語です。
   </div>
 
-  <!-- Panel 1: 自己啓発本に囲まれて -->
-  <div class="panel panel-wide">
-    <img src="manga-images/panel-1.webp" alt="自己啓発本に囲まれ、疲れた表情の主人公" class="panel-img" loading="lazy">
-    <div class="bubble tail-bottom p1-bubble">
-      また、<span class="red">変わろう</span>として、<br>
-      失敗した...
+  <!-- PANEL 1 -->
+  <div class="panel">
+    <img src="manga-images/panel-1.webp" alt="" loading="lazy">
+    <div class="bubble tr b1">
+      また、<span class="em">変わろう</span>として、<br>失敗した...
     </div>
   </div>
 
-  <!-- Panel 2: 全部やったのに -->
-  <div class="panel panel-wide">
-    <img src="manga-images/panel-2.webp" alt="朝活・瞑想・日記...全てに×マーク" class="panel-img" loading="lazy">
-    <div class="bubble tail-bottom p2-bubble">
-      みんなが言う通りに<br>
-      やってるのに...
+  <!-- PANEL 2 -->
+  <div class="panel">
+    <img src="manga-images/panel-2.webp" alt="" loading="lazy">
+    <div class="bubble tb b2">
+      みんなが言う通りに<br>やってるのに...
     </div>
   </div>
 
-  <!-- Panel 3: 限界 -->
-  <div class="panel panel-wide">
-    <img src="manga-images/panel-3.webp" alt="デスクに突っ伏し、疲れ果てた主人公" class="panel-img" loading="lazy">
-    <div class="bubble tail-bottom p3-bubble">
-      何をやっても変われない<br>
-      自分が、<span class="red">嫌い</span>
+  <!-- PANEL 3 -->
+  <div class="panel">
+    <img src="manga-images/panel-3.webp" alt="" loading="lazy">
+    <div class="bubble tl b3">
+      何をやっても変われない<br>自分が、<span class="em">嫌い</span>
     </div>
   </div>
 
-  <!-- Divider -->
-  <div class="divider">・ ・ ・</div>
+  <!-- DOTS -->
+  <div class="dots">・・・</div>
 
-  <!-- Narration: 転機 -->
-  <div class="narration warm">
+  <!-- NARRATION: 転機 -->
+  <div class="narr narr-warm">
     ある日、友人と入ったカフェで。<br>
-    たった一言が、全てを変えた。
+    たった一言が、すべてを変えた。
   </div>
 
-  <!-- Panel 4: 友人の一言 -->
-  <div class="panel panel-wide">
-    <img src="manga-images/panel-4.webp" alt="カフェで友人と話す主人公" class="panel-img" loading="lazy">
-    <div class="bubble tail-bottom p4-bubble-friend">
+  <!-- PANEL 4 -->
+  <div class="panel">
+    <img src="manga-images/panel-4.webp" alt="" loading="lazy">
+    <div class="bubble tb b4">
       ねぇ、そもそも...<br>
-      <span class="red">変わる必要</span>ある？
+      <span class="em">変わる必要</span>ある？
     </div>
   </div>
 
-  <!-- Panel 5: ハッとする -->
-  <div class="panel panel-square">
-    <img src="manga-images/panel-5.webp" alt="ハッとした表情の主人公のクローズアップ" class="panel-img" loading="lazy">
-    <div class="bubble p5-bubble">
-      変わらなくて...<br>
-      <span class="red">いい？</span>
+  <!-- PANEL 5 -->
+  <div class="panel">
+    <img src="manga-images/panel-5.webp" alt="" loading="lazy">
+    <div class="bubble b5">
+      変わらなくて...<span class="em">いい？</span>
     </div>
   </div>
 
-  <!-- Narration: 気づき -->
-  <div class="narration light">
+  <!-- MID CTA -->
+  <div class="mid-cta">
+    <p>
+      もし今、「変わらなきゃ」に<br>
+      疲れているなら。<br>
+      この本があなたの味方になります。
+    </p>
+    <a href="#cta-form">書籍を無料で受け取る</a>
+  </div>
+
+  <!-- NARRATION: 気づき -->
+  <div class="narr narr-light">
     「変わらなきゃ」と思い込んでいた。<br>
     でも本当に必要だったのは——
   </div>
 
-  <!-- Panel 6: 光が差す -->
-  <div class="panel panel-wide">
-    <img src="manga-images/panel-6.webp" alt="朝日に照らされ、穏やかに微笑む主人公" class="panel-img" loading="lazy">
-    <div class="bubble p6-bubble">
+  <!-- PANEL 6 -->
+  <div class="panel">
+    <img src="manga-images/panel-6.webp" alt="" loading="lazy">
+    <div class="bubble tr b6">
       自分のままでいることに、<br>
-      <span class="red">勇気がいる</span>なんて<br>
+      <span class="em">勇気がいる</span>なんて<br>
       思ってなかった。
     </div>
   </div>
 
-  <!-- Panel 7: 自然体 -->
-  <div class="panel panel-wide">
-    <img src="manga-images/panel-7.webp" alt="自然体で笑う主人公" class="panel-img" loading="lazy">
-    <div class="bubble tail-bottom p7-bubble">
+  <!-- PANEL 7 -->
+  <div class="panel">
+    <img src="manga-images/panel-7.webp" alt="" loading="lazy">
+    <div class="bubble tr b7">
       頑張るのをやめたら、<br>
-      なぜか、動き始めた。
+      なぜか、<span class="em">動き始めた。</span>
     </div>
   </div>
 
-  <!-- Narration: 締め -->
-  <div class="narration">
-    変わることが、正解じゃなかった。<br>
-    <strong>「変わらない」という勇気が、人生を動かした。</strong>
+  <!-- NARRATION: 締め -->
+  <div class="narr narr-end">
+    変わることが、正解じゃなかった。<br><br>
+    <strong>「変わらない」という勇気が、<br>人生を動かした。</strong>
   </div>
 
 </div>
+</div>
 
 <!-- ━━━ CTA ━━━ -->
-<section class="cta-section">
-  <div class="cta-inner reveal">
-    <p class="cta-headline">
+<section class="cta" id="cta-form">
+  <div class="wrapper">
+    <span class="cta-badge">2026年6月 扶桑社より発売</span>
+    <h2>
       この考え方を、<br>
-      <em>17のワーク</em>で<br>
+      <span class="accent">17のワーク</span>で<br>
       体験してみませんか？
-    </p>
+    </h2>
 
-    <div class="book-mockup">
-      <div class="book-3d">
+    <div class="book-wrap">
+      <div class="book">
         <div class="book-spine"></div>
-        <div class="book-cover">
-          <span class="book-label">Keisuke Kudo</span>
-          <span class="book-title">変わらない<br>勇気</span>
-          <span class="book-subtitle">〜勇気の17ワーク〜</span>
-          <span class="book-author">工藤 圭介</span>
+        <div class="book-face">
+          <span class="bl">Keisuke Kudo</span>
+          <span class="bt">変わらない<br>勇気</span>
+          <span class="bs">〜勇気の17ワーク〜</span>
+          <span class="ba">工藤 圭介</span>
         </div>
       </div>
     </div>
 
+    <p class="cta-pub"><strong>扶桑社</strong>より商業出版</p>
+
     <p class="cta-desc">
       「変わらなきゃ」に疲れたあなたのための一冊。<br>
-      17のワークを通じて、<br>
-      自分のままでいる勇気を体験できます。
+      17のワークを通じて、自分のままでいる勇気を体験できます。
     </p>
 
-    <form class="cta-form" action="#" method="POST">
+    <form class="form" action="#" method="POST">
       <input type="text" name="name" placeholder="お名前" required>
       <input type="email" name="email" placeholder="メールアドレス" required>
-      <button type="submit" class="cta-btn">書籍を無料で受け取る</button>
+      <button type="submit" class="btn">書籍を無料で受け取る</button>
     </form>
-    <p class="cta-note">※ 登録後すぐにメールでお届けします。いつでも解除できます。</p>
+    <p class="form-note">
+      ※ 登録後すぐにメールでお届けします。<br>
+      ※ いつでも解除できます。
+    </p>
+
+    <div class="trust">
+      <div class="trust-item"><div class="ico">✓</div>無料</div>
+      <div class="trust-item"><div class="ico">✓</div>即日配信</div>
+      <div class="trust-item"><div class="ico">✓</div>解除自由</div>
+    </div>
   </div>
 </section>
 
-<!-- ━━━ Footer ━━━ -->
-<footer class="footer">
-  &copy; 2026 Keisuke Kudo. All rights reserved.
-</footer>
+<!-- ━━━ FOOTER ━━━ -->
+<footer>&copy; 2026 Keisuke Kudo. All rights reserved.</footer>
 
-<!-- ━━━ Scripts ━━━ -->
+<!-- ━━━ JS ━━━ -->
 <script>
-// Scroll reveal for panels and CTA
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
   });
-}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
-document.querySelectorAll('.panel, .reveal').forEach(el => observer.observe(el));
-
-// Stagger narration boxes
-document.querySelectorAll('.narration').forEach(el => {
-  el.classList.add('reveal');
-  observer.observe(el);
-});
-
-// Parallax-lite on hero
-window.addEventListener('scroll', () => {
-  const hero = document.querySelector('.hero');
-  if (hero) {
-    const scrolled = window.scrollY;
-    hero.style.transform = `translateY(${scrolled * 0.15}px)`;
-    hero.style.opacity = Math.max(0, 1 - scrolled / 600);
-  }
-});
+document.querySelectorAll('.panel, .narr').forEach(el => io.observe(el));
 </script>
 
 </body>
