@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>変わらない勇気 — 工藤圭介</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Noto+Serif+JP:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#C8A060;--gold-light:#E8D5A8;--gold-dark:#8B6914;
+  --dark:#0a0f1a;--dark2:#111827;--dark3:#1A1A2E;
+  --warm:#FFF9F0;--warm2:#FFF5ED;
+  --green:#F0FAF8;--green2:#E6F5F2;
+  --font-sans:'Noto Sans JP',sans-serif;
+  --font-serif:'Noto Serif JP',serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000;font-family:var(--font-sans);color:#333;-webkit-font-smoothing:antialiased}
+img{display:block;width:100%;height:auto;object-fit:cover}
+
+/* Wrap */
+.wrap{max-width:540px;margin:0 auto;background:#fff;overflow:hidden;position:relative}
+@media(min-width:541px){.wrap{border-radius:6px;box-shadow:0 0 60px rgba(200,160,96,0.15),0 0 120px rgba(0,0,0,0.4)}}
+
+/* ===== HERO ===== */
+.hero{position:relative;overflow:hidden}
+.hero img{width:100%;min-height:480px;object-fit:cover}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.1) 40%,rgba(0,0,0,0.05) 60%,rgba(0,0,0,0.7) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:32px 24px}
+.hero-text{color:#fff;font-family:var(--font-serif);font-size:clamp(22px,6vw,32px);font-weight:700;line-height:1.7;text-shadow:0 2px 20px rgba(0,0,0,0.6);text-align:center;margin-bottom:16px}
+.hero-sub{color:var(--gold-light);font-size:clamp(13px,3.5vw,16px);line-height:1.8;text-align:center;margin-bottom:24px}
+.hero-scroll{text-align:center;color:rgba(255,255,255,0.6);font-size:12px;animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+/* ===== PANELS ===== */
+.p{position:relative;border:4px solid var(--dark3);border-left:4px solid var(--dark3);border-right:4px solid var(--dark3);margin:0}
+.p img{width:100%;display:block}
+.p-bleed{border:none;margin:0}
+.p-tall{max-height:520px;overflow:hidden}
+.p-tall img{width:100%;height:520px;object-fit:cover;object-position:top}
+
+/* ===== GRID LAYOUTS ===== */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;border:4px solid var(--dark3)}
+.grid-2 .cell{overflow:hidden;position:relative}
+.grid-2 .cell img{width:100%;height:100%;object-fit:cover}
+.grid-2 .cell+.cell{border-left:3px solid var(--dark3)}
+
+/* Diagonal */
+.diag-wrap{display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden;border:4px solid var(--dark3)}
+.diag-left{clip-path:polygon(0 0,100% 0,80% 100%,0 100%);position:relative;z-index:1}
+.diag-right{clip-path:polygon(20% 0,100% 0,100% 100%,0 100%);margin-left:-20%;position:relative}
+.diag-wrap img{width:100%;height:280px;object-fit:cover}
+
+/* ===== NARRATION BANDS ===== */
+.nr{padding:20px 24px;font-size:clamp(14px,3.8vw,17px);line-height:1.9}
+.nr-d{background:var(--dark);color:#ccc}
+.nr-w{background:linear-gradient(135deg,var(--warm),var(--warm2));color:#4A3520}
+.nr-g{background:linear-gradient(135deg,var(--green),var(--green2));color:#2D5A4A}
+.nr-gold{background:linear-gradient(135deg,#1a1408,#2a2010);color:var(--gold-light);border-top:2px solid var(--gold);border-bottom:2px solid var(--gold)}
+.nr-dram{background:var(--dark);color:#fff;font-family:var(--font-serif);font-size:clamp(18px,5vw,26px);font-weight:700;text-align:center;padding:32px 24px;line-height:1.7;text-shadow:0 0 30px rgba(200,160,96,0.3)}
+.nr strong{color:var(--gold)}
+.nr em{font-style:normal;font-weight:700;color:#C0392B}
+
+/* ===== CHAPTER MARKERS ===== */
+.ch{background:var(--dark);color:var(--gold);font-family:var(--font-serif);font-size:clamp(13px,3.5vw,16px);font-weight:700;text-align:center;padding:18px 16px;letter-spacing:0.15em;border-top:2px solid var(--gold-dark);border-bottom:2px solid var(--gold-dark);position:relative}
+.ch::before,.ch::after{content:'';position:absolute;top:50%;width:40px;height:1px;background:var(--gold-dark)}
+.ch::before{left:16px}.ch::after{right:16px}
+
+/* ===== BUBBLES ===== */
+.b{position:absolute;background:#fff;border:3px solid var(--dark3);border-radius:18px;padding:10px 16px;font-size:clamp(12px,3.2vw,15px);line-height:1.6;max-width:65%;box-shadow:3px 3px 0 var(--dark3);z-index:5}
+.b-shout{position:absolute;background:#fff;clip-path:polygon(5% 15%,15% 2%,25% 12%,35% 0%,45% 10%,55% 2%,65% 12%,78% 0%,85% 15%,100% 10%,95% 30%,100% 50%,95% 70%,100% 85%,85% 95%,70% 100%,50% 95%,30% 100%,15% 95%,0% 85%,5% 65%,0% 45%,5% 30%);padding:24px 28px;font-size:clamp(18px,5vw,28px);font-weight:900;color:#C0392B;text-align:center;z-index:5;filter:drop-shadow(3px 3px 0 var(--dark3))}
+.b-think{position:absolute;background:#fff;border:2px solid #999;border-radius:45% 55% 50% 50%/50% 45% 55% 50%;padding:12px 18px;font-size:clamp(12px,3.2vw,14px);line-height:1.6;color:#666;z-index:5}
+.b-think::after{content:'';position:absolute;bottom:-12px;left:30%;width:10px;height:10px;background:#fff;border:2px solid #999;border-radius:50%}
+
+/* ===== MBTI RESULT CARDS ===== */
+.mbti-card{padding:16px 20px;margin:0;font-size:clamp(13px,3.5vw,15px);line-height:1.8;position:relative}
+.mbti-card.weak{background:linear-gradient(135deg,#1a1a2e,#16213e);color:#8899aa;border-left:4px solid #4a5568}
+.mbti-card.strong{background:linear-gradient(135deg,#1a1408,#2a2010);color:var(--gold-light);border-left:4px solid var(--gold)}
+.mbti-card .label{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;opacity:0.7}
+
+/* ===== EFFECTS ===== */
+.focus-lines{position:relative}
+.focus-lines::after{content:'';position:absolute;inset:0;background:repeating-conic-gradient(rgba(200,160,96,0.06) 0deg,transparent 1deg,transparent 4deg) center/100% 100%;pointer-events:none;z-index:2}
+
+.screentone{position:relative}
+.screentone::after{content:'';position:absolute;inset:0;background:radial-gradient(circle,rgba(0,0,0,0.15) 0.5px,transparent 0.5px);background-size:4px 4px;pointer-events:none;z-index:2;mix-blend-mode:multiply}
+
+.speed-lines{position:relative}
+.speed-lines::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 8px,rgba(255,255,255,0.08) 8px,rgba(255,255,255,0.08) 9px);pointer-events:none;z-index:2}
+
+/* Onomatopoeia */
+.sfx{position:absolute;font-family:var(--font-serif);font-weight:900;z-index:5;-webkit-text-stroke:1px rgba(0,0,0,0.3);paint-order:stroke fill}
+.sfx-shake{animation:sfx-shake 0.4s infinite}
+@keyframes sfx-shake{0%,100%{transform:translate(0,0) rotate(-2deg)}25%{transform:translate(2px,-1px) rotate(1deg)}75%{transform:translate(-1px,1px) rotate(-1deg)}}
+
+/* Page turn shadow */
+.page-turn{height:8px;background:linear-gradient(180deg,rgba(0,0,0,0.15),transparent);margin:0}
+
+/* Fade transitions */
+.fade-d{height:40px;background:linear-gradient(180deg,var(--dark),#fff)}
+.fade-w{height:40px;background:linear-gradient(180deg,var(--warm),#fff)}
+.fade-g{height:40px;background:linear-gradient(180deg,var(--green),#fff)}
+.fade-gold{height:40px;background:linear-gradient(180deg,rgba(26,20,8,1),#fff)}
+.fade-to-dark{height:40px;background:linear-gradient(180deg,#fff,var(--dark))}
+
+/* Gold divider */
+.gold-div{height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0}
+
+/* ===== CTA ===== */
+.cta-section{background:linear-gradient(135deg,var(--dark),#1a1408);padding:40px 24px;text-align:center}
+.cta-section h3{color:var(--gold-light);font-family:var(--font-serif);font-size:clamp(18px,5vw,24px);font-weight:700;margin-bottom:8px;line-height:1.6}
+.cta-section p{color:#aaa;font-size:clamp(13px,3.5vw,15px);line-height:1.8;margin-bottom:24px}
+.cta-btn{display:inline-block;background:linear-gradient(135deg,#06C755,#04B34D);color:#fff;font-size:clamp(16px,4.5vw,20px);font-weight:900;padding:16px 48px;border-radius:50px;text-decoration:none;box-shadow:0 4px 20px rgba(6,199,85,0.4);position:relative;overflow:hidden;transition:transform 0.2s,box-shadow 0.2s}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 6px 30px rgba(6,199,85,0.5)}
+.cta-btn::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent);transform:rotate(45deg);animation:shimmer 3s infinite}
+@keyframes shimmer{0%{transform:translateX(-100%) rotate(45deg)}100%{transform:translateX(100%) rotate(45deg)}}
+.cta-sub{color:#777;font-size:12px;margin-top:12px}
+
+/* ===== SPECIAL SECTIONS ===== */
+.warning-section{background:var(--dark);padding:28px 24px;border-left:4px solid #C0392B}
+.warning-section h4{color:#E74C3C;font-size:clamp(14px,3.8vw,17px);font-weight:700;margin-bottom:12px}
+.warning-section p{color:#aab;font-size:clamp(13px,3.4vw,15px);line-height:1.9}
+
+.closing{background:linear-gradient(135deg,var(--warm),#fff);padding:32px 24px;text-align:center}
+.closing p{font-family:var(--font-serif);font-size:clamp(14px,3.8vw,17px);line-height:2;color:#4A3520}
+
+/* ===== INTRO CARD ===== */
+.intro-card{background:var(--warm);padding:24px;position:relative}
+.intro-card .name{font-family:var(--font-serif);font-size:clamp(16px,4.5vw,20px);font-weight:700;color:var(--dark);margin-bottom:8px}
+.intro-card .title{font-size:clamp(12px,3.2vw,14px);color:#8B7355;margin-bottom:12px}
+.intro-card .bio{font-size:clamp(13px,3.4vw,15px);line-height:1.9;color:#4A3520}
+.intro-card .highlight{display:inline;background:linear-gradient(transparent 60%,rgba(200,160,96,0.25) 60%);font-weight:700}
+
+/* ===== SCROLL ANIMATIONS ===== */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-scale{opacity:0;transform:scale(0.95);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal-scale.visible{opacity:1;transform:scale(1)}
+
+/* ===== FOOTER ===== */
+footer{background:var(--dark);padding:24px;text-align:center;color:#555;font-size:11px}
+footer a{color:var(--gold-dark);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ========== HERO (k01) ========== -->
+<div class="hero reveal-scale">
+  <img src="manga-keisuke-images/k01.webp" alt="工藤圭介">
+  <div class="hero-overlay">
+    <div class="hero-text">ちょっと変わったお願いを<br>させてください。</div>
+    <div class="hero-sub">強みをお金に転換して小さな事業を作る<strong>9つの特典</strong>をお渡しするので、<br>どうか、私の新刊<strong>「変わらない勇気」</strong>を<br>無料で受けとっていただけませんか？</div>
+    <div class="hero-scroll">▼ scroll</div>
+  </div>
+</div>
+
+<!-- ========== PROLOGUE: 自己紹介 ========== -->
+<div class="p reveal">
+  <img src="manga-keisuke-images/k02.webp" alt="YouTube撮影">
+</div>
+
+<div class="intro-card reveal">
+  <div class="name">工藤圭介</div>
+  <div class="title">起業家 / MBTIコーチ / YouTuber</div>
+  <div class="bio">
+    人の強みを発掘することが何よりも得意で、いくつもの事業を作ってきました。<br><br>
+    <span class="highlight">年商4000万円</span>に達してからは、沢山の友人と一緒に小さな事業を作ってきて、
+    今は<span class="highlight">30の事業</span>を見守りながら、MBTI専門で<span class="highlight">100万再生のYouTuber</span>をしています。
+  </div>
+</div>
+
+<div class="page-turn"></div>
+
+<div class="p reveal">
+  <img src="manga-keisuke-images/k03.webp" alt="過去を振り返る">
+</div>
+<div class="nr nr-w reveal">
+  こちらの本、何故無料で配布？<br>
+  と思った方も沢山いらっしゃると思います。<br><br>
+  ですので、少しだけ私の過去のお話を、させてください。
+</div>
+
+<!-- ========== CHAPTER 1: 暗黒時代 ========== -->
+<div class="fade-to-dark"></div>
+<div class="ch reveal">CHAPTER 1 ── 枯れた草のような日々</div>
+
+<div class="nr nr-d reveal">
+  今やとても満ちた日々を、有り難く生きている私ですが<br>
+  サラリーマン時代は正反対、エネルギーを全て奪われた、<br>
+  <strong>まるで枯れた草のような人間</strong>でした。
+</div>
+
+<div class="p screentone reveal-scale">
+  <img src="manga-keisuke-images/k04.webp" alt="上司の叱責">
+  <span class="sfx sfx-shake" style="top:8%;right:8%;font-size:clamp(28px,8vw,42px);color:#C0392B;opacity:0.7">ガタッ...</span>
+</div>
+
+<div class="nr nr-d reveal">
+  上司には毎日のように、理不尽な理由で激怒され、<br>
+  <em>逃げるように</em>会社を辞めました。
+</div>
+
+<div class="p-bleed speed-lines reveal-scale">
+  <div class="p-tall">
+    <img src="manga-keisuke-images/k05.webp" alt="会社を去る">
+  </div>
+</div>
+
+<div class="page-turn"></div>
+
+<div class="p-bleed reveal-scale">
+  <img src="manga-keisuke-images/k06.webp" alt="暗い部屋">
+</div>
+
+<div class="nr nr-d reveal">
+  何もできなくなり、部屋から一歩も出ずに、<br>
+  ただただYouTubeを見るだけの日々を過ごしていると——
+</div>
+
+<div class="p reveal">
+  <img src="manga-keisuke-images/k07.webp" alt="YouTubeを見る">
+  <div class="b-think" style="top:12%;right:8%;max-width:55%">
+    もう何もできない...<br>何をやっても変われない...
+  </div>
+</div>
+
+<div class="nr nr-d reveal" style="text-align:center;font-family:var(--font-serif)">
+  偶然——
+</div>
+
+<!-- ========== CHAPTER 2: 大きな転機 ========== -->
+<div class="gold-div"></div>
+<div class="ch reveal">CHAPTER 2 ── 大きな転機</div>
+
+<div class="p focus-lines reveal-scale">
+  <img src="manga-keisuke-images/k08.webp" alt="MBTI発見">
+</div>
+
+<div class="nr nr-gold reveal">
+  <strong>「マッキンゼーなど、世界トップ企業が取り入れている、<br>科学的な強み診断 "MBTI"」</strong><br><br>
+  に出会いました。<br>これが、大きな転機でした。
+</div>
+
+<div class="fade-gold"></div>
+
+<!-- MBTI Result: 弱み vs 強み -->
+<div class="grid-2 reveal-scale">
+  <div class="cell"><img src="manga-keisuke-images/k09.webp" alt="弱みと向き合う"></div>
+  <div class="cell"><img src="manga-keisuke-images/k10.webp" alt="強みに気づく"></div>
+</div>
+
+<div class="mbti-card weak reveal">
+  <div class="label">▼ 診断結果 — 弱み</div>
+  「あなたは計画を立てることが苦手、話に具体性が欠ける、傷つきやすい」
+</div>
+
+<div class="mbti-card strong reveal">
+  <div class="label">▼ けれども — 強み</div>
+  「あなたは<strong>臨機応変に物事に対応ができ、アイディアが豊富で、人の感情を汲み取る力がある</strong>」
+</div>
+
+<div class="fade-gold"></div>
+
+<div class="nr-dram reveal">
+  これまで、弱みだと思って、<br>
+  必死に変えよう変えようとした部分が、<br><br>
+  実は、<strong>強み</strong>だったのだと。<br><br>
+  まるで人生がひっくり返るようで、<br>
+  大きな<strong>衝撃</strong>が走りました。
+</div>
+
+<div class="p focus-lines reveal-scale">
+  <img src="manga-keisuke-images/k11.webp" alt="衝撃の瞬間">
+  <div class="b-shout" style="top:5%;left:50%;transform:translateX(-50%);min-width:160px">
+    コレだ！！
+  </div>
+</div>
+
+<div class="nr nr-gold reveal" style="text-align:center;font-family:var(--font-serif);font-size:clamp(15px,4vw,19px)">
+  これまで弱みだと思っていた部分を認めることにしました。<br><br>
+  そして、ただ<strong>ありのままで生きよう</strong>と強く決めました。
+</div>
+
+<div class="gold-div"></div>
+
+<div class="p-bleed reveal-scale">
+  <img src="manga-keisuke-images/k12.webp" alt="朝の決意">
+</div>
+
+<div class="nr nr-g reveal">
+  私の性格的にはマーケティングの仕事が相性が良いらしく、<br>
+  「マーケティングを独学で学び、1人ビジネスをはじめました。」
+</div>
+
+<!-- ========== MID CTA ========== -->
+<div class="cta-section reveal">
+  <h3>「変わらない勇気」<br>無料で受け取りませんか？</h3>
+  <p>強みをお金に転換して小さな事業を作る<br><strong style="color:var(--gold-light)">9つの特典</strong>も一緒にお届けします</p>
+  <a href="#line-add" class="cta-btn">LINEで無料で受け取る</a>
+  <div class="cta-sub">メールアドレス・住所の入力は一切不要です</div>
+</div>
+
+<!-- ========== CHAPTER 3: 没頭 ========== -->
+<div class="ch reveal">CHAPTER 3 ── 没頭</div>
+
+<div class="diag-wrap reveal-scale">
+  <div class="diag-left"><img src="manga-keisuke-images/k13.webp" alt="カフェで没頭"></div>
+  <div class="diag-right"><img src="manga-keisuke-images/k14.webp" alt="仕事の楽しさ"></div>
+</div>
+
+<div class="nr nr-g reveal">
+  これが、めちゃくちゃ楽しくて、<br>
+  はじめて、<strong>仕事に没頭できる感覚</strong>を味わいました。<br><br>
+  小さくても、今の自分にできることに集中すると、<br>
+  強みがどんどん磨かれていき、<br>
+  コツコツと着実に事業が伸びていきました。
+</div>
+
+<div class="page-turn"></div>
+
+<div class="p reveal-scale">
+  <img src="manga-keisuke-images/k15.webp" alt="友人と相談">
+</div>
+
+<div class="nr nr-w reveal">
+  すると、枯渇感を感じていた親友からも相談が来るようになり、<br>
+  MBTI診断を使ってその親友の<strong>強みの芽</strong>を見つけ、<br>
+  小さな事業を一緒に作っていきました。
+</div>
+
+<div class="p reveal">
+  <img src="manga-keisuke-images/k16.webp" alt="友人の笑顔">
+</div>
+
+<div class="nr nr-w reveal">
+  もしかしたら、昔の私と同じように、<br>
+  強みがわからず何を試しても上手くいかなくて、<br>
+  必死に変わろうとして、でも変われなくて、敗北感を感じている<br><br>
+  <strong>そんな昔の私のようなあなた</strong>に、少しでも貢献できたらと思い、<br>
+  本を書くことにしました。
+</div>
+
+<div class="fade-to-dark"></div>
+
+<div class="p-bleed reveal-scale">
+  <img src="manga-keisuke-images/k17.webp" alt="執筆">
+</div>
+
+<div class="nr-dram reveal">
+  ありのままの自分でいながら、<br>
+  自然と見つかっていく<strong>"強みの芽"</strong>を活かして、<br>
+  小さく事業を作る、<strong>"1人ビジネス術"</strong>を、<br><br>
+  没頭するように書き切り、<br>
+  私の<strong>人生の集大成</strong>として、完成することができました。
+</div>
+
+<div class="gold-div"></div>
+
+<!-- ========== EPILOGUE ========== -->
+<div class="ch reveal">EPILOGUE</div>
+
+<div class="p-bleed reveal-scale">
+  <img src="manga-keisuke-images/k18.webp" alt="桜の中を歩く">
+</div>
+
+<div class="nr nr-g reveal" style="text-align:center;font-family:var(--font-serif);font-size:clamp(14px,3.8vw,17px)">
+  少しでも、あなたが自分の<strong>強みの芽</strong>に気づいて、<br>
+  自分のことを心の底から好きになり、<br>
+  尊敬する人に囲まれて、自由気ままに最高の日々を送ることに、<br>
+  貢献できましたら幸いです。
+</div>
+
+<div class="p reveal-scale" style="border:none">
+  <img src="manga-keisuke-images/k19.webp" alt="手を差し伸べる" style="border-radius:8px">
+</div>
+
+<div class="nr nr-w reveal" style="text-align:center">
+  そして、もし私から直接サポートできることがあったら、<br>
+  ご縁をいただけましたら、とても嬉しいです。<br><br>
+  さて、<strong>変わらない勇気</strong>、<br>ぜひ一度読んでみていただけませんか？
+</div>
+
+<!-- ========== SAFETY NOTE ========== -->
+<div class="warning-section reveal">
+  <h4>最後に1つだけ注意点</h4>
+  <p>
+    この動画をきっと今すぐ一気見すると思うのですが、<br>
+    勢いあまって<strong style="color:#E74C3C">「変わらないこと」を人に宣言しないこと</strong>です。<br><br>
+    なぜなら、新しい考え方と出会うと、<br>
+    本能的に人はそれを恐れてしまい、<br>
+    いわゆるドリームキラーになって否定してしまうからです。<br><br>
+    ですので、あなたの中で、<br>
+    <strong style="color:var(--gold-light)">自信をもって静かな一歩</strong>を進めてみてください。
+  </p>
+</div>
+
+<!-- ========== CLOSING ========== -->
+<div class="closing reveal">
+  <p>
+    これまでの辛かった経験の全てが、<br>
+    強みを見つけるために必要な経験だったと感じ、<br><br>
+    これまでのあなたまで含めて、<br>
+    <strong>全てのあなたを肯定できて、</strong><br>
+    明るく前に進めることを、<br>
+    心から願っています。
+  </p>
+</div>
+
+<!-- ========== FINAL CTA ========== -->
+<div class="cta-section reveal">
+  <h3>動画書籍の受け取り方</h3>
+  <p>LINEを追加して<br>「受け取るボタン」を押す、<strong style="color:var(--gold-light)">それだけです。</strong></p>
+  <a href="#line-add" class="cta-btn" style="font-size:clamp(18px,5vw,22px);padding:18px 56px">
+    LINEで無料で受け取る
+  </a>
+  <div class="cta-sub" style="margin-top:16px">
+    一切お金は請求しません。ご住所など個人情報の入力も一切不要です。<br>
+    本の原稿のまま「動画書籍」として出版したため、無料でお届けできます。
+  </div>
+  <div style="margin-top:20px;color:#666;font-size:clamp(12px,3vw,14px);line-height:1.8">
+    それでも申し訳ないなぁという方は、<br>
+    最後まで読んでご感想を送っていただけたら、とても嬉しいです。
+  </div>
+</div>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  &copy; 2024 工藤圭介 All Rights Reserved.
+</footer>
+
+</div><!-- /.wrap -->
+
+<script>
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}})
+},{threshold:0.15,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal,.reveal-scale').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
