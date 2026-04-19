@@ -25,11 +25,13 @@ img{display:block;width:100%;height:auto;object-fit:cover}
 
 /* ===== HERO ===== */
 .hero{position:relative;overflow:hidden}
-.hero img{width:100%;min-height:480px;object-fit:cover}
-.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.1) 40%,rgba(0,0,0,0.05) 60%,rgba(0,0,0,0.7) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:32px 24px}
-.hero-text{color:#fff;font-family:var(--font-serif);font-size:clamp(22px,6vw,32px);font-weight:700;line-height:1.7;text-shadow:0 2px 20px rgba(0,0,0,0.6);text-align:center;margin-bottom:16px}
-.hero-sub{color:var(--gold-light);font-size:clamp(13px,3.5vw,16px);line-height:1.8;text-align:center;margin-bottom:24px}
-.hero-scroll{text-align:center;color:rgba(255,255,255,0.6);font-size:12px;animation:bounce 2s infinite}
+.hero img{width:100%;min-height:540px;object-fit:cover;object-position:top}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.15) 0%,transparent 35%,transparent 45%,rgba(0,0,0,0.25) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:20px 16px}
+.hero-card{background:rgba(10,15,26,0.78);backdrop-filter:blur(20px) saturate(1.2);-webkit-backdrop-filter:blur(20px) saturate(1.2);border-radius:16px;border:1px solid rgba(200,160,96,0.2);padding:28px 22px 24px;position:relative;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.4)}
+.hero-card::before{content:'';position:absolute;top:0;left:15%;right:15%;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.hero-text{color:#fff;font-family:var(--font-serif);font-size:clamp(20px,5.5vw,30px);font-weight:700;line-height:1.7;text-shadow:0 1px 8px rgba(0,0,0,0.5);text-align:center;margin-bottom:14px}
+.hero-sub{color:var(--gold-light);font-size:clamp(12px,3.2vw,15px);line-height:1.85;text-align:center;margin-bottom:0;text-shadow:0 1px 4px rgba(0,0,0,0.3)}
+.hero-scroll{text-align:center;color:rgba(255,255,255,0.45);font-size:11px;margin-top:14px;animation:bounce 2s infinite}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 
 /* ===== PANELS ===== */
@@ -149,8 +151,10 @@ footer a{color:var(--gold-dark);text-decoration:none}
 <div class="hero reveal-scale">
   <img src="manga-keisuke-images/k01.webp" alt="工藤圭介">
   <div class="hero-overlay">
-    <div class="hero-text">ちょっと変わったお願いを<br>させてください。</div>
-    <div class="hero-sub">強みをお金に転換して小さな事業を作る<strong>9つの特典</strong>をお渡しするので、<br>どうか、私の新刊<strong>「変わらない勇気」</strong>を<br>無料で受けとっていただけませんか？</div>
+    <div class="hero-card">
+      <div class="hero-text">ちょっと変わったお願いを<br>させてください。</div>
+      <div class="hero-sub">強みをお金に転換して小さな事業を作る<strong>9つの特典</strong>をお渡しするので、<br>どうか、私の新刊<strong>「変わらない勇気」</strong>を<br>無料で受けとっていただけませんか？</div>
+    </div>
     <div class="hero-scroll">▼ scroll</div>
   </div>
 </div>
