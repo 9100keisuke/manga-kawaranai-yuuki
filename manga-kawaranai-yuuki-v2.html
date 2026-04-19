@@ -142,8 +142,8 @@ body{
 /* L4: 縦2段 + 横1段 L字レイアウト */
 .grid-L{
   display:grid;
-  grid-template-columns:1fr 1fr;
-  grid-template-rows:210px 210px;
+  grid-template-columns:3fr 2fr;
+  grid-template-rows:180px 180px;
   gap:0;
   border:3px solid #1A1A2E;margin-bottom:-3px;
   overflow:hidden;
@@ -154,7 +154,7 @@ body{
 .grid-L .cell{position:relative;overflow:hidden;}
 .grid-L .cell img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;display:block;}
 .grid-L .cell-big{grid-row:1/3;border-right:2px solid #1A1A2E;}
-.grid-L .cell-big img{object-position:top center;}
+.grid-L .cell-big img{object-position:center;}
 .grid-L .cell-top{border-bottom:2px solid #1A1A2E;}
 
 /* L5: フルブリード（枠なし） */
